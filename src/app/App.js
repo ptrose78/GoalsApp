@@ -5,9 +5,9 @@ import {
   BrowserRouter,
   Routes
 } from "react-router-dom";
-import Goals from "../features/goals/Goals";
-import AppLayout from "./AppLayout";
-
+import AppLayout from "./AppLayout"
+import Goals from "../features/goals/Goals"
+import NewGoalForm from "../components/NewGoalForm"
 
 export default function App() {
   return (
@@ -15,6 +15,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<AppLayout/>}>
           <Route path="goals" element={<Goals/>}/>
+          <Route path="goals/new" element={<NewGoalForm/>}/>
         </Route>
       </Routes>
     </BrowserRouter>
