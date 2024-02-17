@@ -1,5 +1,7 @@
 import React, {useState} from "react";
-import { useDispatch } from "react-redux";
+import {useDispatch} from "react-redux";
+import {useNavigate} from "react-router-dom";
+import ROUTES from "../app/routes"
 import { v4 as uuidv4 } from "uuid";
 import {addGoal} from "../features/goals/goalsSlice";
 
@@ -8,15 +10,19 @@ export default function NewGoalForm() {
     const [name, setName] = useState("");
     const [date, setDate] = useState("");
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     function handleSubmit(e) {
+      
         e.preventDefault();
-        if (name.length || date.length === 0) {
+        if ((name.length === 0) || (date.length === 0)) {
             return;
         }
 
     const id = uuidv4();
         dispatch(addGoal({id, name, date}));
+     console.log('hi')
+        navigate(ROUTES.goalsRoute());
     }
 
     return (

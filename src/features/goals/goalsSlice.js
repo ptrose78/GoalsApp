@@ -25,5 +25,5 @@ export const goalsSlice = createSlice({
 })
 
 export const {addGoal, removeGoal} = goalsSlice.actions;
-export const {selectedGoals} = (state) => state.goals.goals;
+export const selectGoals = (state) => state.goals.goals;
 export default goalsSlice.reducer;
