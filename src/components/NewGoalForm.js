@@ -1,8 +1,13 @@
 import React, {useState} from "react";
+import { useDispatch } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
+import {addGoal} from "../features/goals/goalsSlice";
+
 
 export default function NewGoalForm() {
     const [name, setName] = useState("");
     const [date, setDate] = useState("");
+    const dispatch = useDispatch();
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -10,6 +15,8 @@ export default function NewGoalForm() {
             return;
         }
 
+    const id = uuidv4();
+        dispatch(addGoal({id, name, date}));
     }
 
     return (
