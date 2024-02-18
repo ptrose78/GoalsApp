@@ -6,6 +6,7 @@ import {selectGoals} from "./goalsSlice"
 
 export default function Goals() {
     const goals = useSelector(selectGoals);
+    console.log(goals)
 
 return (
     <section>
@@ -14,6 +15,7 @@ return (
             (<Link key={goal.id} to={ROUTES.goalRoute(goal.id)}>
                 <li className="goal">
                     {goal.name} {goal.date}
+                    <button>Tasks List</button>
                 </li>
             </Link>
             ))}
