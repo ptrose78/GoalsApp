@@ -21,7 +21,6 @@ export default function NewGoalForm() {
 
     const id = uuidv4();
         dispatch(addGoal({id, name, date}));
-     console.log('hi')
         navigate(ROUTES.goalsRoute());
     }
 
