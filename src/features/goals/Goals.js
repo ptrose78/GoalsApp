@@ -6,7 +6,6 @@ import {selectGoals} from "./goalsSlice"
 
 export default function Goals() {
     const goals = useSelector(selectGoals);
-    console.log(goals)
 
 return (
     <section>
