@@ -11,14 +11,15 @@ export default function Tasks() {
     const {goalId} = useParams();
     const goal = goals[goalId];
 
-    const tasks = useSelector(selectTasks);  
+    const tasks = useSelector(selectTasks); 
 
     return (
         <section>
             <h2>Goal: {goal.name}</h2>
             <h3>Task List</h3>
-            <p>{Object.values(tasks).map((task)=>
-                (<li>{task.name}</li>))}</p>
+            <p>{goal.taskIds.map((taskId)=>
+                (<li>{tasks[taskId].name}</li>))}
+            </p>
             <Link to={ROUTES.newTaskRoute(goalId)}>
             <button>Create Task</button>
             </Link>
