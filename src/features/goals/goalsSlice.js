@@ -10,6 +10,7 @@ export const goalsSlice = createSlice({
 	reducers: {
 		addGoal: (state, action) => {
 			const {id, name, date} = action.payload;
+			console.log(action.payload)
 			state.goals[id] = {
 				id: id,
 				name: name,
