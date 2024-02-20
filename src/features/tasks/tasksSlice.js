@@ -23,7 +23,7 @@ export const tasksSlice = createSlice({
             const {id} = action.payload;
             state.tasks.filter(task=>task.id !== id)
         }
-    }   
+    } 
 })
 
 export const {addTask} = tasksSlice.actions;

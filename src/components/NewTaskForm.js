@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import ROUTES from "../app/routes";
 import {addTask} from "../features/tasks/tasksSlice";
+import {linkTaskToGoal} from "../features/goals/goalsSlice";
 import { useParams } from "react-router-dom";
 import {v4 as uuidv4} from "uuid";
 
@@ -23,6 +24,7 @@ export default function NewTaskForm() {
         console.log(id)
 
         dispatch(addTask({id, name, resources, notes}));
+        dispatch(linkTaskToGoal({goalId, id}));
         navigate(ROUTES.goalRoute(goalId));
     }
     
