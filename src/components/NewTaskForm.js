@@ -1,5 +1,5 @@
 import React from "react";
-import { UseDispatch, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import ROUTES from "../app/routes";

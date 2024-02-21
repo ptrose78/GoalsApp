@@ -6,6 +6,9 @@ import {selectTasks} from "./tasksSlice";
 import ROUTES from "../../app/routes";
 import { Link } from "react-router-dom";
 
+//state.goals = produce((state, draft => {draft.goals = Object.values(draft.goals).filter(goal => {console.log(goal.id)})}))
+			//state.goals = newState;
+
 export default function Tasks() {
     const goals = useSelector(selectGoals);
     const {goalId} = useParams();
