@@ -8,16 +8,17 @@ export const todosSlice = createSlice({
     name: "todos",
     initialState: initialState,
     reducers: {
-        addTodos: (state, action) => {
-            const {id, todos} = action.payload;
+        addTodo: (state, action) => {
+            console.log(id);
+            const {id} = action.payload;
             state.todos[id] = {
                 id: id,
                 taskIds: []
             }
         },
-        removeTodos: (state, action) => {
+        removeTodo: (state, action) => {
             const {id, taskIds} = action.payload;
-            state.todos = Object.values(state.todos).reduce((acc, todo){
+            state.todos = Object.values(state.todos).reduce((acc, todo)=>{
                 if (todo.id !== id) {
                     acc[todo.id] = todo;
                 }
@@ -31,6 +32,6 @@ export const todosSlice = createSlice({
     }
 }) 
 
-export const {addTodos, removeTodos, linkTaskToTodo} = todosSlice.actions;
+export const {addTodo, removeTodo, linkTaskToTodo} = todosSlice.actions;
 export const selectTodos = (state) => state.todos.todos;
 export default todosSlice.reducer;

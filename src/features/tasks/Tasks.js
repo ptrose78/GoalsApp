@@ -5,6 +5,8 @@ import {selectGoals} from "../goals/goalsSlice";
 import {selectTasks} from "./tasksSlice";
 import {removeTask} from "./tasksSlice";
 import {removeTaskFromGoals} from "../goals/goalsSlice";
+import {addTodo} from "../todos/todosSlice";
+import {linkTaskToTodo} from "../todos/todosSlice";
 import ROUTES from "../../app/routes";
 import { Link } from "react-router-dom";
 
@@ -21,6 +23,11 @@ export default function Tasks() {
         dispatch(removeTaskFromGoals({id}));
     }
 
+    function handleAddTodo(id){
+        dispatch(addTodo({id}));
+        dispatch(linkTaskToTodo({id}));
+    }
+
     return (
         <section>
             <h2>Goal: {goal.name}</h2>
@@ -31,6 +38,7 @@ export default function Tasks() {
                     return (<li key={taskId}>
                                 {task.name}
                                 <button onClick={()=>{handleRemoveTask(task.id)}}>x</button>
+                                <button onClick={()=>{handleAddTodo(task.id)}}>+</button>
                             </li>);
                 }
             })
