@@ -8,13 +8,16 @@ import {removeTaskFromGoals} from "../goals/goalsSlice";
 import {addTodo} from "../todos/todosSlice";
 import {linkTaskToTodo} from "../todos/todosSlice";
 import ROUTES from "../../app/routes";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import {v4 as uuidv4} from "uuid";
 
 export default function Tasks() {
     const goals = useSelector(selectGoals);
     const tasks = useSelector(selectTasks);
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const {goalId} = useParams();
     const goal = goals[goalId];
 
@@ -23,9 +26,12 @@ export default function Tasks() {
         dispatch(removeTaskFromGoals({id}));
     }
 
-    function handleAddTodo(id){
+    function handleAddTodo(taskId) {
+        const id = uuidv4();
         dispatch(addTodo({id}));
-        dispatch(linkTaskToTodo({id}));
+
+        dispatch(linkTaskToTodo({taskId, id}));
+        navigate(ROUTES.todoRoute());
     }
 
     return (
