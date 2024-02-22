@@ -1,5 +1,4 @@
 import {createSlice} from "@reduxjs/toolkit";
-import produce from 'immer';
 
 const initialState = {
 	goals: {}
@@ -21,7 +20,6 @@ export const goalsSlice = createSlice({
 		},
 		removeGoal: (state, action) => {
 			const {id, name, date} = action.payload;
-			console.log(id)
 
 			state.goals = Object.values(state.goals).reduce((acc, goal)=>{
 				if (goal.id !== id) {
@@ -34,10 +32,16 @@ export const goalsSlice = createSlice({
             const {goalId, id} = action.payload;
 
 			state.goals[goalId].taskIds.push(id);
-        }
+        },
+		removeTaskFromGoals: (state, action) => {
+			const {id} = action.payload;
+			Object.values(state.goals).forEach((goal)=>{
+				goal.taskIds = goal.taskIds.filter((taskId) => taskId !== id)
+			})
+		}
     }
 })
 
-export const {addGoal, removeGoal, linkTaskToGoal} = goalsSlice.actions;
+export const {addGoal, removeGoal, linkTaskToGoal, removeTaskFromGoals} = goalsSlice.actions;
 export const selectGoals = (state) => state.goals.goals;
 export default goalsSlice.reducer;

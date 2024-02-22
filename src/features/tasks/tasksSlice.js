@@ -1,4 +1,4 @@
-import React from "react-redux";
+import React, { useDispatch } from "react-redux";
 import { createSlice } from "@reduxjs/toolkit";
 
 export const tasksSlice = createSlice({
@@ -8,24 +8,26 @@ export const tasksSlice = createSlice({
     },
     reducers: {
         addTask: (state, action) => {
-            
             const {id, name, resources, notes} = action.payload;
-            console.log(id)
-            console.log(action.payload)
             state.tasks[id] = {
 				id: id,
 				name: name,
 				resources: resources,
                 notes: notes
 			};
-        },
+        }, 
         removeTask: (state, action) => {
             const {id} = action.payload;
-            state.tasks.filter(task=>task.id !== id)
+            state.tasks = Object.values(state.tasks).reduce((acc, task)=>{
+				if (task.id !== id) {
+					acc[task.id] = task
+				}
+				return acc;
+				}, {});
         }
     } 
 })
 
-export const {addTask} = tasksSlice.actions;
+export const {addTask, removeTask} = tasksSlice.actions;
 export const selectTasks = (state) => state.tasks.tasks;
 export default tasksSlice.reducer;
