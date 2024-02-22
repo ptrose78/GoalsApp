@@ -16,14 +16,19 @@ export default function Todos () {
 
     return (
         <section>
-            <h2>Todos</h2>
+            {Object.values(todos).length !== 0 ? (
+                 <h2>Todos</h2>
+                ) : (
+                    null
+                )}
             {Object.values(todos).map((todo)=>{
                 return (todo.taskIds).map((todoTaskId)=>{
                     return Object.values(tasks).map((task)=>{
                         if (todoTaskId === task.id) {
                            return (<li key={todoTaskId}>
                                     {task.name}
-                                    <button onClick={()=>{handleRemoveTodo(todoTaskId)}}>x</button>
+                                    {todo.id}
+                                    <button onClick={()=>{handleRemoveTodo(todo.id)}}>x</button>
                                   </li>
                            )
                         }})

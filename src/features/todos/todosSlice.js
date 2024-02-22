@@ -20,13 +20,18 @@ export const todosSlice = createSlice({
             const {id} = action.payload;
             state.todos = Object.values(state.todos).reduce((acc, todo)=>{
                 if (todo.id !== id) {
+                    console.log(id)
+                    console.log(todo.id)
                     acc[todo.id] = todo;
                 }
+                console.log(acc)
                 return acc;
             }, {});
         },
         linkTaskToTodo: (state, action) => {
             const {taskId, id} = action.payload;
+            console.log(taskId)
+            console.log(id)
             state.todos[id].taskIds.push(taskId);
         },
         removeTaskFromTodo: (state, action) => {

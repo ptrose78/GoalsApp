@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import {selectGoals} from "../goals/goalsSlice";
 import {selectTasks} from "./tasksSlice";
+import {selectTodos} from "../todos/todosSlice";
 import {removeTask} from "./tasksSlice";
 import {removeTaskFromGoals} from "../goals/goalsSlice";
 import {addTodo} from "../todos/todosSlice";
@@ -15,6 +16,7 @@ import {v4 as uuidv4} from "uuid";
 export default function Tasks() {
     const goals = useSelector(selectGoals);
     const tasks = useSelector(selectTasks);
+    const todos = useSelector(selectTodos);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
