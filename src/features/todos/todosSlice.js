@@ -30,3 +30,7 @@ export const todosSlice = createSlice({
         }
     }
 }) 
+
+export const {addTodos, removeTodos, linkTaskToTodo} = todosSlice.actions;
+export const selectTodos = (state) => state.todos.todos;
+export default todosSlice.reducer;
