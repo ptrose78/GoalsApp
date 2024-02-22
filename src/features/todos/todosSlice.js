@@ -9,8 +9,8 @@ export const todosSlice = createSlice({
     initialState: initialState,
     reducers: {
         addTodo: (state, action) => {
-            console.log(id);
             const {id} = action.payload;
+            console.log(id);
             state.todos[id] = {
                 id: id,
                 taskIds: []
@@ -26,8 +26,8 @@ export const todosSlice = createSlice({
             }, {});
         },
         linkTaskToTodo: (state, action) => {
-            const {todoId, id} = action.payload;
-            state.todos[todoId].taskIds.push(id);
+            const {taskId, id} = action.payload;
+            state.todos[id].taskIds.push(taskId);
         }
     }
 }) 
