@@ -7,15 +7,11 @@ import {selectGoals} from "./goalsSlice"
 import {removeGoal} from "./goalsSlice"
 
 export default function Goals() {
-    const [id, setId] = useState();
-    const [name, setName] = useState();
-    const [date, setDate] = useState();
 
     const goals = useSelector(selectGoals);
     const dispatch = useDispatch();
 
-    function handleGoalRemoval(id) {
-        console.log(id)
+    function handleRemoveGoal(id) {
         dispatch(removeGoal({id}))
     }
 
@@ -30,7 +26,7 @@ return (
                     <button>Tasks List</button>
                 </li>
             </Link>
-             <button onClick={()=>{handleGoalRemoval(goal.id)}}>X</button>
+             <button onClick={()=>{handleRemoveGoal(goal.id)}}>X</button>
              </>
             )}
         </ul>
