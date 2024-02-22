@@ -5,6 +5,7 @@ import ROUTES from "../../app/routes";
 import {Link} from "react-router-dom";
 import {selectGoals} from "./goalsSlice"
 import {removeGoal} from "./goalsSlice"
+import { Outlet, NavLink } from "react-router-dom";
 
 export default function Goals() {
 
@@ -30,9 +31,14 @@ return (
              </>
             )}
         </ul>
-            
-        <Link to={ROUTES.newGoalRoute()}>
-            Create New Goal
-        </Link>   
+        
+        {Object.values(goals).length !== 0 ? (
+            <Link to={ROUTES.newGoalRoute()}>
+                Create New Goal
+            </Link>
+            ) : (
+            null
+            )
+        }
     </section>    
 )}
