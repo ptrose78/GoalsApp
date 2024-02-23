@@ -4,20 +4,26 @@ import {useState} from "react";
 import ROUTES from "../../app/routes";
 import {Link} from "react-router-dom";
 import {selectGoals} from "./goalsSlice"
-import {removeGoal} from "./goalsSlice"
+import {selectTodos} from "../todos/todosSlice"
+import {removeGoal} from "./goalsSlice";
+import {removeTodo} from "../todos/todosSlice"
 import { Outlet, NavLink } from "react-router-dom";
 
 export default function Goals() {
 
     const goals = useSelector(selectGoals);
+    const todos = useSelector(selectTodos);
+ 
     const dispatch = useDispatch();
 
     function handleRemoveGoal(id) {
-        dispatch(removeGoal({id}))
+        dispatch(removeGoal({id}));
+        //dispatch(removeTodo({todosId}))
     }
 
 return (
     <section>
+       
         <ul>
             {Object.values(goals).map((goal) => 
             <>

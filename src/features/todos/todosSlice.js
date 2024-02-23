@@ -9,8 +9,7 @@ export const todosSlice = createSlice({
     initialState: initialState,
     reducers: {
         addTodo: (state, action) => {
-            const {id} = action.payload;
-            console.log(id);
+            const {id, goalId} = action.payload;
             state.todos[id] = {
                 id: id,
                 taskIds: []
@@ -18,10 +17,9 @@ export const todosSlice = createSlice({
         },
         removeTodo: (state, action) => {
             const {id} = action.payload;
+            console.log(id)
             state.todos = Object.values(state.todos).reduce((acc, todo)=>{
                 if (todo.id !== id) {
-                    console.log(id)
-                    console.log(todo.id)
                     acc[todo.id] = todo;
                 }
                 console.log(acc)
