@@ -27,7 +27,6 @@ export default function Todos () {
                         if (todoTaskId === task.id) {
                            return (<li key={todoTaskId}>
                                     {task.name}
-                                    {todo.id}
                                     <button onClick={()=>{handleRemoveTodo(todo.id)}}>x</button>
                                   </li>
                            )

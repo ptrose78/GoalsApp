@@ -9,8 +9,6 @@ import {selectTodos} from "../features/todos/todosSlice";
 export default function AppLayout() {
     const goals = useSelector(selectGoals);
     const todos = useSelector(selectTodos);
-    console.log(goals)
-    console.log(todos)
 
     return (
         <div>    

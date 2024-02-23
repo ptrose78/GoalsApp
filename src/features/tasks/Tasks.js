@@ -7,6 +7,7 @@ import {selectTodos} from "../todos/todosSlice";
 import {removeTask} from "./tasksSlice";
 import {removeTaskFromGoals} from "../goals/goalsSlice";
 import {addTodo} from "../todos/todosSlice";
+import {removeTodo} from "../todos/todosSlice";
 import {linkTaskToTodo} from "../todos/todosSlice";
 import ROUTES from "../../app/routes";
 import { useNavigate } from "react-router-dom";
@@ -26,11 +27,16 @@ export default function Tasks() {
     function handleRemoveTask(id){
         dispatch(removeTask({id}));
         dispatch(removeTaskFromGoals({id}));
+
+        if (todos[id]) {
+            dispatch(removeTodo({id}));
+        }
     }
 
-    function handleAddTodo(taskId) {
+    function handleAddTodo(taskId, goalId) {
         const id = uuidv4();
-        dispatch(addTodo({id}));
+        console.log(goalId)
+        dispatch(addTodo({id, goalId}));
 
         dispatch(linkTaskToTodo({taskId, id}));
         navigate(ROUTES.todoRoute());
@@ -46,7 +52,7 @@ export default function Tasks() {
                     return (<li key={taskId}>
                                 {task.name}
                                 <button onClick={()=>{handleRemoveTask(task.id)}}>x</button>
-                                <button onClick={()=>{handleAddTodo(task.id)}}>+</button>
+                                <button onClick={()=>{handleAddTodo(task.id, goal.id)}}>+</button>
                             </li>);
                 }
             })
