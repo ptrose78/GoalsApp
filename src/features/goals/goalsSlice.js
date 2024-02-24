@@ -9,17 +9,18 @@ export const goalsSlice = createSlice({
 	initialState: initialState,
 	reducers: {
 		addGoal: (state, action) => {
-			const {id, name, date} = action.payload;
+			const {id, name, date, note} = action.payload;
 			
 			state.goals[id] = {
 				id: id,
 				name: name,
 				date: date,
+				note: note,
 				taskIds: []
 			};
 		},
 		removeGoal: (state, action) => {
-			const {id, name, date} = action.payload;
+			const {id, name, date, note} = action.payload;
 			
 			state.goals = Object.values(state.goals).reduce((acc, goal)=>{
 				if (goal.id !== id) {

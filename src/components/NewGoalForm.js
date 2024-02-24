@@ -9,6 +9,7 @@ import {addGoal} from "../features/goals/goalsSlice";
 export default function NewGoalForm() {
     const [name, setName] = useState("");
     const [date, setDate] = useState("");
+    const [note, setNote] = useState("");
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -20,7 +21,7 @@ export default function NewGoalForm() {
         }
 
     const id = uuidv4();
-        dispatch(addGoal({id, name, date}));
+        dispatch(addGoal({id, name, date, note}));
         navigate(ROUTES.goalsRoute());
     }
 
@@ -36,6 +37,11 @@ export default function NewGoalForm() {
                     id="goal-date"
                     placeholder="Goal Date" 
                     onChange={(e) => setDate(e.currentTarget.value)}>
+            </input>
+            <input 
+                    id="goal-note"
+                    placeholder="Goal Note" 
+                    onChange={(e) => setNote(e.currentTarget.value)}>
             </input>
             <button type="submit">Create Goal</button>
         </form>

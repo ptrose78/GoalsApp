@@ -1,7 +1,7 @@
 import React from "react";
 import { UseDispatch, useDispatch, useSelector } from "react-redux";
 import {selectTodos} from "./todosSlice";
-import {removeTodo, removeTaskFromTodo} from "./todosSlice";
+import {removeTodo} from "./todosSlice";
 import {selectTasks} from "../tasks/tasksSlice";
 
 export default function Todos () {
@@ -12,7 +12,6 @@ export default function Todos () {
 
     function handleRemoveTodo(id) {
         dispatch(removeTodo({id}));
-        //dispatch(removeTaskFromTodo({id}));
     }
 
     return (
