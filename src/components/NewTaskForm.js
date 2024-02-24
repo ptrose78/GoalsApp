@@ -21,7 +21,6 @@ export default function NewTaskForm() {
         e.preventDefault();
 
         const id = uuidv4();
-        console.log(id)
 
         dispatch(addTask({id, name, resources, notes}));
         dispatch(linkTaskToGoal({goalId, id}));

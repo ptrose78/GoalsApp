@@ -27,8 +27,8 @@ export default function AppLayout() {
                         </NavLink>
                     </li>
                 )}
-
-                {Object.values(todos).length !== 0 ? (
+                
+                {Object.values(todos).length !== 0 && Object.keys(goals).length !== 0 ? (
                     <li>
                         <NavLink to={ROUTES.todoRoute()}>
                             To-dos
@@ -37,9 +37,7 @@ export default function AppLayout() {
                 ) : (
                         null
                 )}
-
                 </ul>
-
             </nav>
             <Outlet/>
         </div>

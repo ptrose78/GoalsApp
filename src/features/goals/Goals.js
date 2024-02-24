@@ -13,12 +13,11 @@ export default function Goals() {
 
     const goals = useSelector(selectGoals);
     const todos = useSelector(selectTodos);
- 
+
     const dispatch = useDispatch();
 
     function handleRemoveGoal(id) {
         dispatch(removeGoal({id}));
-        //dispatch(removeTodo({todosId}))
     }
 
 return (

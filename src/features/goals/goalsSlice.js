@@ -20,7 +20,7 @@ export const goalsSlice = createSlice({
 		},
 		removeGoal: (state, action) => {
 			const {id, name, date} = action.payload;
-
+			
 			state.goals = Object.values(state.goals).reduce((acc, goal)=>{
 				if (goal.id !== id) {
 					acc[goal.id] = goal
@@ -33,6 +33,11 @@ export const goalsSlice = createSlice({
 
 			state.goals[goalId].taskIds.push(id);
         },
+		linkTodoToGoal: (state, action) => {
+            const {goalId, id} = action.payload;
+
+			state.goals[goalId].todoIds.push(id);
+        },
 		removeTaskFromGoals: (state, action) => {
 			const {id} = action.payload;
 			Object.values(state.goals).forEach((goal)=>{
@@ -42,6 +47,6 @@ export const goalsSlice = createSlice({
     }
 })
 
-export const {addGoal, removeGoal, linkTaskToGoal, removeTaskFromGoals} = goalsSlice.actions;
+export const {addGoal, removeGoal, linkTaskToGoal, removeTaskFromGoals, linkTodoToGoal} = goalsSlice.actions;
 export const selectGoals = (state) => state.goals.goals;
 export default goalsSlice.reducer;
