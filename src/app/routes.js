@@ -1,7 +1,8 @@
 const ROUTES = {
+    homeRoute: () => "/",
     goalsRoute: () => "/goals",
     newGoalRoute: () => "/goals/new",
-    goalRoute: (id) => `/goals/${id}`,
+    tasksRoute: (id) => `/tasks/${id}`,
     newTaskRoute: (id) => `/tasks/new/${id}`,
     todoRoute: () => '/todos'
   };

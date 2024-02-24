@@ -24,7 +24,7 @@ export default function NewTaskForm() {
 
         dispatch(addTask({id, name, resources, notes}));
         dispatch(linkTaskToGoal({goalId, id}));
-        navigate(ROUTES.goalRoute(goalId));
+        navigate(ROUTES.tasksRoute(goalId));
     }
     
     return (

@@ -14,6 +14,7 @@ import ROUTES from "../../app/routes";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import {v4 as uuidv4} from "uuid";
+import '../../app/App.css';
 
 export default function Tasks() {
     const goals = useSelector(selectGoals);
@@ -30,7 +31,7 @@ export default function Tasks() {
         dispatch(removeTaskFromGoals({id}));
         dispatch(removeTodo({id}))
     }
-    
+
     function handleAddTodo(id) {
         dispatch(addTodo({id}));
 
@@ -39,7 +40,7 @@ export default function Tasks() {
 
     return (
         <section>
-            
+            <div className="uncenter-container">
             <h3>Task List</h3>
             <p>{goal.taskIds.map((taskId)=>{
                  const task = tasks[taskId];
@@ -56,6 +57,7 @@ export default function Tasks() {
             <Link to={ROUTES.newTaskRoute(goalId)}>
             <button>Create Task</button>
             </Link>
+            </div>
         </section>
     )
 }
