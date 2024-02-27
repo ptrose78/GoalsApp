@@ -33,14 +33,16 @@ export default function Goals() {
 
     return (
 
-      Object.keys(goals).length !== 0 ? (    
+      Object.keys(goals).length !== 0 ? (
+         
       <section className="goal-list">
+      <div className="table-container">
       <table className="goal-table">
         <thead>
           <tr>
-            <th>Name</th>
+            <th className="rounded-top-left">Name</th>
             <th>Date</th>
-            <th>Note</th>
+            <th className="rounded-top-right">Notes</th>
             <th></th>
           </tr>
         </thead>
@@ -51,19 +53,21 @@ export default function Goals() {
               <td>{goal.date}</td>
               <td>{goal.note}</td>
               <td>
-              <Link to={ROUTES.tasksRoute(goal.id)}><button className="task-button">Add Task</button></Link>
-              <button onClick={() => handleRemoveGoal(goal.id)} className="remove-button">X</button>
+                <Link to={ROUTES.tasksRoute(goal.id)}><button className="task-button">Add Task</button></Link>
+                <button onClick={() => handleRemoveGoal(goal.id)} className="remove-button">X</button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+
     
       {Object.values(goals).length !== 0 && (
-        <Link to={ROUTES.newGoalRoute()} className="create-goal-link">
-          Create New Goal
+        <Link to={ROUTES.newGoalRoute()} className="custom-link">
+          <button className="custom-button">Create New Goal</button>
         </Link>
       )}
+    </div> 
     </section>
     ) : (
     <>
