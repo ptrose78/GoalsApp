@@ -18,7 +18,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<AppLayout/>}>
           <Route path="goals" element={<Goals/>}/>
-          <Route path="goals/new" element={<NewGoalForm/>}/>
+          <Route className="newGoalForm" path="goals/new" element={<NewGoalForm/>}/>
           <Route path="tasks/:goalId" element={<Tasks/>}/>
           <Route path="tasks/new/:goalId" element={<NewTaskForm/>}/>
           <Route path ="todos" element={<Todos/>}/>

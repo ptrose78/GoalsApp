@@ -9,6 +9,7 @@ import {selectTodos} from "../todos/todosSlice"
 import {removeGoal} from "./goalsSlice";
 import {removeAllTodos} from "../todos/todosSlice"
 import { Outlet, NavLink } from "react-router-dom";
+import NewGoalForm from "../../components/NewGoalForm";
 
 export default function Goals() {
 
@@ -17,19 +18,23 @@ export default function Goals() {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    console.log(Object.keys(goals).length)
+
+   
 
     function handleRemoveGoal(id) {
         dispatch(removeGoal({id}));
 
-        if (Object.keys(goals).length === 1) {
+        if (Object.keys(goals).length === 0) {
             dispatch(removeAllTodos())
             navigate(ROUTES.homeRoute());
         }
     }
 
     return (
+
       Object.keys(goals).length !== 0 ? (    
-        <section className="goal-list">
+      <section className="goal-list">
       <table className="goal-table">
         <thead>
           <tr>
@@ -46,7 +51,7 @@ export default function Goals() {
               <td>{goal.date}</td>
               <td>{goal.note}</td>
               <td>
-              <Link to={ROUTES.tasksRoute(goal.id)}><button className="task-button">Tasks List</button></Link>
+              <Link to={ROUTES.tasksRoute(goal.id)}><button className="task-button">Add Task</button></Link>
               <button onClick={() => handleRemoveGoal(goal.id)} className="remove-button">X</button>
               </td>
             </tr>
@@ -61,9 +66,15 @@ export default function Goals() {
       )}
     </section>
     ) : (
-    null
+    <>
+      <div style={{ textAlign: 'center' }}>
+      <h2>Oops, You have not created a goal yet!</h2>
+      </div>
+      <div style={{ textAlign: 'center' }}>
+      <NewGoalForm title={" "}/>
+      </div>
+    </>
     )
-
     )
 }
     
