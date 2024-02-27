@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 import {addGoal} from "../features/goals/goalsSlice";
 
 
-export default function NewGoalForm() {
+export default function NewGoalForm({title}) {
     const [name, setName] = useState("");
     const [date, setDate] = useState("");
     const [note, setNote] = useState("");
@@ -27,7 +27,7 @@ export default function NewGoalForm() {
 
     return (
         <section>
-        <h2>Create a New Goal</h2>
+        <h2 style={{ textAlign: 'center' }}>{title || "Create a Goal"}</h2>
         <form onSubmit = {handleSubmit}>
             <input id="goal-name" 
                    placeholder="Goal Title" 

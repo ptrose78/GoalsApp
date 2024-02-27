@@ -51,10 +51,32 @@ button,
   cursor: pointer;
 }
 
+.app-name-1 {
+  color: rgb(225, 225, 235);
+  text-align: left;
+  display: inline;
+}
+
+.app-name-2 {
+  color: rgb(6, 6, 7);
+  text-align: center;
+}
+
 /* Navigation styling */
 nav {
   background-color: #111; /* Dark background color */
   padding: 20px;
+  width: 100%;
+}
+
+.center-nav {
+  text-align: center;
+  justify-content: center; /* Horizontally center content */
+  display: inline;
+}
+
+nav span {
+  color: rgb(225, 225, 235);
 }
 
 nav ul {
@@ -74,12 +96,12 @@ nav ul li:last-child {
 
 nav ul li a {
   text-decoration: none;
-  color: #fff; /* Text color for navigation links */
-  font-size: 18px; /* Font size for navigation links */
+  color: #fff;
+  font-size: 18px; 
 }
 
 nav ul li a:hover {
-  color: #e50914; /* Text color on hover */
+  color: #e50914; 
 }
 
 /* Center container styling */
@@ -87,28 +109,28 @@ nav ul li a:hover {
   display: flex;
   justify-content: center; /* Horizontally center content */
   align-items: center; /* Vertically center content */
-  height: 100vh; /* Set height to 100% of viewport height */
+  height: 25vh; /* Set height to 25% of viewport height */
 }
 
 .uncenter-container {
-  display: block; /* Ensures it behaves like a regular block-level element */
-  width: auto; /* Adjust width as needed */
+  display: block; 
+  width: auto; 
   margin: 0 auto; /* Centers the container horizontally */
 }
 
 /* Link styling */
 .homepage-button {
   text-decoration: none;
-  color: #fff; /* Text color for the link */
-  font-size: 18px; /* Font size for the link */
-  padding: 8px 16px; /* Padding for the link */
-  border-radius: 5px; /* Rounded corners for the link */
-  background-color: #e50914; /* Netflix red color for the link background */
+  color: #fff; 
+  font-size: 18px; 
+  padding: 8px 16px; 
+  border-radius: 5px; 
+  background-color: #e50914; 
   transition: background-color 0.3s; /* Smooth transition on hover */
 }
 
 .homepage-button:hover {
-  background-color: #b2070c; /* Darker red color on hover */
+  background-color: #b2070c; 
 }
 
 /* Goal Styling */
@@ -129,14 +151,14 @@ nav ul li a:hover {
 .goal-table {
   width: 100%;
   border-collapse: collapse;
-  background-color: #f8f8f8; /* Light background color for the table */
+  background-color: #f8f8f8; 
   border-radius: 8px; /* Rounded corners for the table */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Shadow for the table */
 }
 
 .goal-table th,
 .goal-table td {
-  padding: 12px; /* Increased padding for better spacing */
+  padding: 12px;
   border-bottom: 1px solid #ddd;
   text-align: left;
 }
@@ -151,10 +173,10 @@ nav ul li a:hover {
 
 .task-button,
 .remove-button {
-  background-color: #e50914; /* Netflix red color */
+  background-color: #e50914; 
   color: #fff;
   border: none;
-  padding: 8px 16px; /* Increased padding for better button appearance */
+  padding: 8px 16px; 
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s; /* Smooth transition on hover */

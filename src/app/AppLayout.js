@@ -6,6 +6,8 @@ import {selectGoals} from "../features/goals/goalsSlice";
 import {selectTodos} from "../features/todos/todosSlice";
 import {selectTasks} from "../features/tasks/tasksSlice";
 import { useLocation } from 'react-router-dom';
+import NewGoalForm from "../components/NewGoalForm"
+import Goals from "../features/goals/Goals"
 
 
 export default function AppLayout() {
@@ -13,48 +15,38 @@ export default function AppLayout() {
     const todos = useSelector(selectTodos);
     const tasks = useSelector(selectTasks);
     const location = useLocation();
+    const title = "Create Your First Goal";
 
     return (
-        <div> 
-            {Object.keys(goals).length !== 0 ? (    
+        <div>                    
+            <div className="center-nav">
                 <nav>
+                    <h1 className="app-name-1">Goal Getter</h1>
                     <ul>
-                    {Object.keys(goals).length !== 0 ? (
-                        <li> 
+                        <li>
                             <NavLink to={ROUTES.goalsRoute()}>
                                 Goals
                             </NavLink>
                         </li>
-                    ) : (
-                        null
-                    )}
-   
-                    
-                    {Object.keys(goals).length !== 0 ? (
-                        <li>
+                        <li>            
                             <NavLink to={ROUTES.todoRoute()}>
                                 To-dos
-                            </NavLink>
-                        </li>
-                    ) : (
-                            null
-                    )}
-                    </ul>
-                </nav>
-            ) : (
-            null
-            )
-        }
-            <div className="center-container">
+                            </NavLink>    
+                        </li>  
+                    </ul>  
+                </nav>                         
+            </div>
+            <div>
             {Object.keys(goals).length === 0 && location.pathname === ROUTES.homeRoute() ? (
-                <Link to={ROUTES.newGoalRoute()} className="homepage-button">
-                    Create a Goal
-                </Link>
+                <div className="center-container">                
+                <NewGoalForm title={title}/>
+                </div>
             ) : (
                 null
             )}
             <Outlet/>
             </div>
         </div>
-    );
+        
+    )
 }
