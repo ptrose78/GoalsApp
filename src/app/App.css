@@ -136,6 +136,7 @@ nav ul li a:hover {
 /* Goal Styling */
 .goal-list {
   margin-top: 20px;
+  border-radius: 25px;
 }
 
 .goal-item {
@@ -148,42 +149,101 @@ nav ul li a:hover {
   color: inherit;
 }
 
+.table-container {
+  overflow: hidden; 
+  border-radius: 50px 50px 0 0; 
+}
+
 .goal-table {
-  width: 100%;
+  width: 70%;
   border-collapse: collapse;
-  background-color: #f8f8f8; 
-  border-radius: 8px; /* Rounded corners for the table */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Shadow for the table */
+  background-color: #b2070f;
+  color: #ffffff;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .goal-table th,
 .goal-table td {
   padding: 12px;
-  border-bottom: 1px solid #ddd;
   text-align: left;
+  font-size: 20px;
 }
 
 .goal-table th {
-  background-color: #f2f2f2;
+  font-size: 24px;
 }
 
-.goal-table tbody tr:last-child td {
-  border-bottom: none;
+.goal-table td {
+  font-size: 18px;
+}
+
+.goal-table th {
+  background-color:  #333333;
+}
+
+.goal-table tbody tr:nth-child(even) {
+  background-color: #242424;
+}
+
+.goal-table tbody tr:hover {
+  background-color: #8a1919;
+}
+
+.goal-table th,
+.goal-table td {
+  border-bottom: 1px solid #333333;
+}
+
+.goal-table td:first-child,
+.goal-table th:first-child {
+  border-left: none;
+}
+
+.goal-table td:last-child,
+.goal-table th:last-child {
+  border-right: none;
 }
 
 .task-button,
 .remove-button {
-  background-color: #e50914; 
-  color: #fff;
+  background-color: #050505;
+  color: #ffffff;
   border: none;
-  padding: 8px 16px; 
-  border-radius: 5px;
+  padding: 8px 12px;
   cursor: pointer;
-  transition: background-color 0.3s; /* Smooth transition on hover */
+  margin-right: 5px;
 }
 
 .task-button:hover,
 .remove-button:hover {
-  background-color: #b2070c; /* Darker red color on hover */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Shadow on hover for button */
+  background-color: #333333;
+}
+
+/* Button Styling */
+.custom-button {
+  background-color: #d60d0d; 
+  color: #ffffff; 
+  border: none;
+  padding: 15px 20px;
+  font-size: 18px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-top: 25px;
+  display: block; 
+  margin-left: auto; 
+  margin-right: auto; 
+  text-decoration: none; 
+}
+
+.custom-button:hover {
+  background-color: #fa0505; /* Darker blue on hover */
+}
+
+.custom-link {
+  text-decoration: none; 
+}
+
+.task-button {
+  margin-bottom: 2px;;
 }
