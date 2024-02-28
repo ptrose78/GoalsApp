@@ -60,8 +60,7 @@ export default function Goals() {
           ))}
         </tbody>
       </table>
-
-    
+          
       {Object.values(goals).length !== 0 && (
         <Link to={ROUTES.newGoalRoute()} className="custom-link">
           <button className="custom-button">Create New Goal</button>
