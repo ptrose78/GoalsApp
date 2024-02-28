@@ -38,9 +38,9 @@ export default function AppLayout() {
             </div>
             <div>
             {Object.keys(goals).length === 0 && location.pathname === ROUTES.homeRoute() ? (
-                <div className="center-container">                
+                      
                 <NewGoalForm title={title}/>
-                </div>
+            
             ) : (
                 null
             )}

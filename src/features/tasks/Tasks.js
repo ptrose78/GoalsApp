@@ -40,8 +40,8 @@ export default function Tasks() {
 
     return (
         <section>
-            <div className="uncenter-container">
-            <h3>Task List</h3>
+            <div className="center-container">
+            <h3 className="task-title">Task List</h3>
             <p>{goal.taskIds.map((taskId)=>{
                  const task = tasks[taskId];
                  if (task) {
