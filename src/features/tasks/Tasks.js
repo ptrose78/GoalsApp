@@ -39,25 +39,42 @@ export default function Tasks() {
     }
 
     return (
-        <section>
-            <div className="center-container">
-            <h3 className="task-title">Task List</h3>
-            <p>{goal.taskIds.map((taskId)=>{
-                 const task = tasks[taskId];
-                 if (task) {
-                    return (<li key={taskId}>
-                                {task.name}
-                                <button onClick={()=>{handleRemoveTask(task.id)}}>x</button>
-                                <button onClick={()=>{handleAddTodo(task.id)}}>+</button>
-                            </li>);
-                }
-            })
-            }
-            </p>
-            <Link to={ROUTES.newTaskRoute(goalId)}>
-            <button>Create Task</button>
-            </Link>
-            </div>
-        </section>
+        <section className="goal-list">
+        <div className="table-container">
+            <table className="goal-table">
+                <thead>
+                <tr>
+                    <th className="rounded-top-left">Name</th>
+                    <th>Date</th>
+                    <th className="rounded-top-right">Notes</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+            {goal.taskIds.map((taskId) => {
+                const task = tasks[taskId];
+                if (task) {
+                return (
+                    <tr key={taskId}>
+                    <td>{task.name}</td>
+                    <td>{task.name}</td>
+                    <td>{task.name}</td>
+                    <td>
+                        <button onClick={() => { handleRemoveTask(task.id) }} className="task-button">x</button>
+                        <button onClick={() => { handleAddTodo(task.id) }} className="remove-button">+</button>
+                    </td>
+                    </tr>
+                )}
+          
+                return null;
+                })}
+                </tbody>
+            </table>
+
+            <Link to={ROUTES.newTaskRoute(goalId)} className="custom-link">
+                <button className="custom-button">Create Task</button>
+            </Link>          
+    </div>
+    </section>
     )
 }
