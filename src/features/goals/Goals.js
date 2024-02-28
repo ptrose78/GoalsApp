@@ -75,7 +75,7 @@ export default function Goals() {
       <h2>Oops, You have not created a goal yet!</h2>
       </div>
       <div style={{ textAlign: 'center' }}>
-      <NewGoalForm title={" "}/>
+      <NewGoalForm title={"Create a Goal"}/>
       </div>
     </>
     )

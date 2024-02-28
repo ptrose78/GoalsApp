@@ -26,25 +26,30 @@ export default function NewGoalForm({title}) {
     }
 
     return (
-        <section>
-        <h2 style={{ textAlign: 'center' }}>{title || "Create a Goal"}</h2>
-        <form onSubmit = {handleSubmit}>
-            <input id="goal-name" 
-                   placeholder="Goal Title" 
-                   onChange={(e) => setName(e.currentTarget.value)}>
-            </input>
-            <input 
-                    id="goal-date"
-                    placeholder="Goal Date" 
-                    onChange={(e) => setDate(e.currentTarget.value)}>
-            </input>
-            <input 
-                    id="goal-note"
-                    placeholder="Goal Note" 
-                    onChange={(e) => setNote(e.currentTarget.value)}>
-            </input>
-            <button type="submit">Create Goal</button>
+        <section className="goalGetter-form">
+        <h2>{title || "Create a Goal"}</h2>
+        <form onSubmit={handleSubmit}>
+          <input
+            id="goal-name"
+            className="goalGetter-input"
+            placeholder="Goal Title"
+            onChange={(e) => setName(e.currentTarget.value)}
+          />
+          <input
+            id="goal-date"
+            className="goalGetter-input"
+            placeholder="Goal Date"
+            onChange={(e) => setDate(e.currentTarget.value)}
+          />
+          <input
+            id="goal-note"
+            className="goalGetter-input"
+            placeholder="Goal Note"
+            onChange={(e) => setNote(e.currentTarget.value)}
+          />
+          <button className="goalGetter-button" type="submit">Create Goal</button>
         </form>
-        </section>
+      </section>
+      
     )
 }

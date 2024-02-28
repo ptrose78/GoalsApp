@@ -28,17 +28,28 @@ export default function NewTaskForm() {
     }
     
     return (
-        <section>
-            <h2>Create a New Task</h2>           
-            <form onSubmit={handleSubmit}>
-                <input placeholder="Name" onChange={(e)=>setName(e.currentTarget.value)}>
-                </input>
-                <input placeholder="Resources" onChange={(e)=>setResources(e.currentTarget.value)}>
-                </input>
-                <input placeholder="Notes" onChange={(e)=>setNotes(e.currentTarget.value)}></input>
-                <button type="submit">Create New Task</button>
-            </form>
-        </section>
+        <section className="goalGetter-form">
+        <h2>Create a New Task</h2>
+        <form onSubmit={handleSubmit} className="center-container">
+          <input
+            className="goalGetter-input"
+            placeholder="Name"
+            onChange={(e) => setName(e.currentTarget.value)}
+          />
+          <input
+            className="goalGetter-input"
+            placeholder="Resources"
+            onChange={(e) => setResources(e.currentTarget.value)}
+          />
+          <input
+            className="goalGetter-input"
+            placeholder="Notes"
+            onChange={(e) => setNotes(e.currentTarget.value)}
+          />
+          <button className="goalGetter-button" type="submit">Create New Task</button>
+        </form>
+      </section>
+      
 
     )
 }
