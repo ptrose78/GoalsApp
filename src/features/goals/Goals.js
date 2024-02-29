@@ -7,7 +7,7 @@ import {Link} from "react-router-dom";
 import {selectGoals} from "./goalsSlice"
 import {selectTodos} from "../todos/todosSlice"
 import {removeGoal} from "./goalsSlice";
-import {removeAllTodos} from "../todos/todosSlice"
+import {removeGoalFromTodos, removeAllTodos} from "../todos/todosSlice"
 import { Outlet, NavLink } from "react-router-dom";
 import NewGoalForm from "../../components/NewGoalForm";
 
@@ -18,24 +18,16 @@ export default function Goals() {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    console.log(Object.keys(goals).length)
-
-   
 
     function handleRemoveGoal(id) {
-        dispatch(removeGoal({id}));
-
-        if (Object.keys(goals).length === 0) {
-            dispatch(removeAllTodos())
-            navigate(ROUTES.homeRoute());
-        }
+        dispatch(removeGoalFromTodos({id}));
+        dispatch(removeGoal({id}));        
     }
 
     return (
-
       Object.keys(goals).length !== 0 ? (
-         
       <section className="goal-list">
+      <h1 className="page-heading">Goals List</h1> 
       <div className="table-container">
       <table className="goal-table">
         <thead>

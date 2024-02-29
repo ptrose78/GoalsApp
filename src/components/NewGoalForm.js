@@ -33,12 +33,14 @@ export default function NewGoalForm({title}) {
             id="goal-name"
             className="goalGetter-input"
             placeholder="Goal Title"
+            required
             onChange={(e) => setName(e.currentTarget.value)}
           />
           <input
             id="goal-date"
             className="goalGetter-input"
             placeholder="Goal Date"
+            required
             onChange={(e) => setDate(e.currentTarget.value)}
           />
           <input

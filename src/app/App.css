@@ -53,8 +53,14 @@ button,
 
 .app-name-1 {
   color: rgb(225, 225, 235);
-  text-align: left;
-  display: inline;
+  font-size: 30px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-style: oblique;
+  position: absolute; /* Position .app-name absolutely relative to its nearest positioned ancestor (.header) */
+  left: 0; /* Align to the left side of .header */
+  top: 0; /* Align to the top of .header */
+  padding-left: 15px;
+  margin-top: 15px;
 }
 
 .app-name-2 {
@@ -66,13 +72,14 @@ button,
 nav {
   background-color: #111; /* Dark background color */
   padding: 20px;
+  padding-left: 0px;
   width: 100%;
-}
-
-.center-nav {
-  text-align: center;
-  justify-content: center; /* Horizontally center content */
-  display: inline;
+  margin-bottom: 55px;
+  position: relative; /* Establishes a positioning context for absolute positioning */
+  display: flex;
+  justify-content: center; /* Center the flex items (the .centered-titles div) horizontally */
+  align-items: center; /* Center the flex items vertically */
+ 
 }
 
 nav span {
@@ -83,6 +90,9 @@ nav ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
+  display: flex;
+  gap: 20px; /* Adjust the space between the titles as needed */
+  /* No specific width; it will be as wide as its content requires */
 }
 
 nav ul li {
@@ -102,6 +112,27 @@ nav ul li a {
 
 nav ul li a:hover {
   color: #e50914; 
+}
+
+@media (max-width: 768px) {
+  .nav {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .app-name {
+    margin-bottom: 20px; /* Adds space between the app name and the nav links */
+  }
+
+  .nav ul {
+    flex-direction: column;
+    gap: 10px; /* Adjust gap for vertical layout */
+  }
+}
+
+.page-heading {
+  text-align: center;
+  font-size: 28px;
 }
 
 /* Center container styling */
@@ -172,7 +203,7 @@ nav ul li a:hover {
 }
 
 .goal-table th {
-  font-size: 24px;
+  font-size: 22px;
 }
 
 .goal-table td {
@@ -257,7 +288,7 @@ nav ul li a:hover {
   padding: 20px;
   border-radius: 10px;
   margin: 25px auto;
-  max-width: 400px;
+  max-width: 600px;
 }
 
 .goalGetter-input {

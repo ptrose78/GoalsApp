@@ -36,6 +36,7 @@ export const goalsSlice = createSlice({
         },
 		linkTodoToGoal: (state, action) => {
             const {goalId, id} = action.payload;
+			console.log(goalId)
 
 			state.goals[goalId].todoIds.push(id);
         },

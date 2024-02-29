@@ -1,17 +1,20 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import ROUTES from "../app/routes";
 import {addTask} from "../features/tasks/tasksSlice";
 import {linkTaskToGoal} from "../features/goals/goalsSlice";
+import {selectGoals} from "../features/goals/goalsSlice";
 import { useParams } from "react-router-dom";
 import {v4 as uuidv4} from "uuid";
 
 export default function NewTaskForm() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const goals = useSelector(selectGoals);
     const {goalId} = useParams();
+    const goal = goals[goalId];
 
     const[name, setName] = useState();
     const[resources, setResources] = useState();
@@ -29,21 +32,22 @@ export default function NewTaskForm() {
     
     return (
         <section className="goalGetter-form">
-        <h2>Create a New Task</h2>
+        <h2>Create a New Task for "{goal.name}"</h2>
         <form onSubmit={handleSubmit} className="center-container">
           <input
             className="goalGetter-input"
-            placeholder="Name"
+            placeholder="Task Name"
+            required
             onChange={(e) => setName(e.currentTarget.value)}
           />
           <input
             className="goalGetter-input"
-            placeholder="Resources"
+            placeholder="Task Resources"
             onChange={(e) => setResources(e.currentTarget.value)}
           />
           <input
             className="goalGetter-input"
-            placeholder="Notes"
+            placeholder="Task Notes"
             onChange={(e) => setNotes(e.currentTarget.value)}
           />
           <button className="goalGetter-button" type="submit">Create New Task</button>
