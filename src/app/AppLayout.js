@@ -17,7 +17,7 @@ export default function AppLayout() {
     const location = useLocation();
     const title = "Create Your First Goal";
 
-    return (
+    return (     
         <div>                    
             <div className="center-nav">
                 <nav>
@@ -46,7 +46,7 @@ export default function AppLayout() {
             )}
             <Outlet/>
             </div>
+            
         </div>
-        
     )
 }

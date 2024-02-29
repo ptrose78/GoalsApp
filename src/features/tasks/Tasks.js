@@ -33,19 +33,20 @@ export default function Tasks() {
     }
 
     function handleAddTodo(id) {
-        dispatch(addTodo({id}));
+        dispatch(addTodo({id, goalId}));
 
         navigate(ROUTES.todoRoute());
     }
 
     return (
         <section className="goal-list">
+        <h1 className="page-heading">Tasks for "{goal.name}"</h1> 
         <div className="table-container">
             <table className="goal-table">
                 <thead>
                 <tr>
                     <th className="rounded-top-left">Name</th>
-                    <th>Date</th>
+                    <th>Resources</th>
                     <th className="rounded-top-right">Notes</th>
                     <th></th>
                 </tr>
@@ -57,11 +58,12 @@ export default function Tasks() {
                 return (
                     <tr key={taskId}>
                     <td>{task.name}</td>
-                    <td>{task.name}</td>
-                    <td>{task.name}</td>
+                    <td>{task.resources}</td>
+                    <td>{task.notes}</td>
                     <td>
-                        <button onClick={() => { handleRemoveTask(task.id) }} className="task-button">x</button>
-                        <button onClick={() => { handleAddTodo(task.id) }} className="remove-button">+</button>
+                        <button onClick={() => { handleAddTodo(task.id) }} className="task-button">Add To-do</button>
+                        <button onClick={() => { handleRemoveTask(task.id) }} className="remove-button">x</button>
+                       
                     </td>
                     </tr>
                 )}
