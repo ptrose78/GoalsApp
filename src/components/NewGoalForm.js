@@ -3,8 +3,7 @@ import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import ROUTES from "../app/routes"
 import { v4 as uuidv4 } from "uuid";
-import {addGoal} from "../features/goals/goalsSlice";
-
+import {addGoal, postGoal} from "../features/goals/goalsSlice";
 
 export default function NewGoalForm({title}) {
     const [name, setName] = useState("");
@@ -23,6 +22,15 @@ export default function NewGoalForm({title}) {
     const id = uuidv4();
         dispatch(addGoal({id, name, date, note}));
         navigate(ROUTES.goalsRoute());
+
+        const goalData = {
+          id, id,
+          name: name,
+          date: date,
+          note: note,
+          };
+
+    dispatch(postGoal(goalData));
     }
 
     return (
@@ -41,6 +49,7 @@ export default function NewGoalForm({title}) {
             className="goalGetter-input"
             placeholder="Goal Date"
             required
+            type="date"
             onChange={(e) => setDate(e.currentTarget.value)}
           />
           <input
