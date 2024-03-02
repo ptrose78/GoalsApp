@@ -1,4 +1,5 @@
 import React from "react";
+import { useEffect } from "react";
 import './App.css';
 import {
   Route,
@@ -13,6 +14,13 @@ import NewTaskForm from "../components/NewTaskForm"
 import Todos from "../features/todos/Todos"
 
 export default function App() {
+  useEffect(() => {
+    fetch('http://localhost:8081/customers')
+    .then(res => res.json())
+    .then(data => console.log(data))
+    .catch(err => console.log(err))
+  }, [])
+
   return (
     <BrowserRouter>
       <Routes>
