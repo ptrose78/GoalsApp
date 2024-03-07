@@ -1,23 +1,29 @@
 import React from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {useState} from "react";
+import {useEffect} from "react";
 import ROUTES from "../../app/routes";
 import { useNavigate } from "react-router-dom";
 import {Link} from "react-router-dom";
 import {selectGoals} from "./goalsSlice"
 import {selectTodos} from "../todos/todosSlice"
-import {removeGoal} from "./goalsSlice";
+import {removeGoal, fetchGoals} from "./goalsSlice";
 import {removeGoalFromTodos, removeAllTodos} from "../todos/todosSlice"
 import { Outlet, NavLink } from "react-router-dom";
 import NewGoalForm from "../../components/NewGoalForm";
 
 export default function Goals() {
 
-    const goals = useSelector(selectGoals);
-    const todos = useSelector(selectTodos);
-
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    
+    useEffect(() => {
+      dispatch(fetchGoals());
+  }, [dispatch]); 
+
+
+    const goals = useSelector(selectGoals);
+    const todos = useSelector(selectTodos);
+    console.log(goals)
 
     function handleRemoveGoal(id) {
         dispatch(removeGoalFromTodos({id}));
