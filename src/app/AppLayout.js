@@ -1,8 +1,9 @@
 import React from "react";
-import { Outlet, NavLink, Link } from "react-router-dom";
+import {Outlet, NavLink, Link} from "react-router-dom";
 import ROUTES from "./routes";
+import {BrowserRouter as Route} from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
-import {selectGoals} from "../features/goals/goalsSlice";
+import {selectGoals,fetchGoals} from "../features/goals/goalsSlice";
 import {selectTodos} from "../features/todos/todosSlice";
 import {selectTasks} from "../features/tasks/tasksSlice";
 import { useLocation } from 'react-router-dom';
@@ -11,6 +12,8 @@ import Goals from "../features/goals/Goals"
 
 
 export default function AppLayout() {
+    const dispatch = useDispatch();
+
     const goals = useSelector(selectGoals);
     const todos = useSelector(selectTodos);
     const tasks = useSelector(selectTasks);
@@ -43,6 +46,7 @@ export default function AppLayout() {
             
             ) : (
                 null
+                //<Route to={ROUTES.goalsRoute()}/>
             )}
             <Outlet/>
             </div>

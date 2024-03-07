@@ -22,8 +22,6 @@ app.post('/goals/new', (req, res) => {
   
     const sql = "INSERT INTO goalgetter.goals (id, name, date, note) VALUES (?, ?, ?, ?)";
     db.query(sql, [id, name, date, note], (err, result) => {
-        console.log(req.body)
-        console.log('inside sql query')
         if (err) {
             console.log(err);
             return res.json(err);
@@ -32,7 +30,25 @@ app.post('/goals/new', (req, res) => {
     });
 });
 
-app.listen(8081, () => {
+app.get('/goals', async (req, res) => {
+    console.log('bye')
+    try {
+      const sql = "SELECT * FROM goalgetter.goals"; 
+      db.query(sql, (err, result) => {
+        if (err) {
+          console.error("Error fetching goals:", err);
+          return res.status(500).json({ error: "Error fetching goals" });
+        }
+        console.log(result)
+        return res.status(200).json(result); 
+      });
+    } catch (error) {
+      console.error("Error:", error);
+      return res.status(500).json({ error: "Error fetching goals" });
+    }
+  });
+
+app.listen(4000, () => {
     console.log("listening")
 })
 
