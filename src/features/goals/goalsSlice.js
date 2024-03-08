@@ -2,10 +2,11 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 export const postGoal = createAsyncThunk(
-	'posts/createPost',
+	'posts/postGoal',
 	async (postData) => {
 	  try {
 		const response = await axios.post('/goals/new', postData);
+		console.log(response.data)
 		return response.data;
 	  } catch (error) {
 		throw error;
@@ -16,7 +17,6 @@ export const postGoal = createAsyncThunk(
 export const fetchGoals = createAsyncThunk('goals/fetchGoals', async () => {
 	try {
 	  const response = await axios.get('/goals');
-	  console.log(response.data)
 	  const reformattedGoals = response.data.reduce((acc, goal) => {
 		const { id, name, date, note } = goal;
 		
@@ -55,17 +55,17 @@ export const goalsSlice = createSlice({
 	name: "goals",
 	initialState: initialState,
 	reducers: {
-		// addGoal: (state, action) => {
-		// 	const {id, name, date, note} = action.payload;
+		addGoal: (state, action) => {
+			const {id, name, date, note} = action.payload;
 			
-		// 	state.goals[id] = {
-		// 		id: id,
-		// 		name: name,
-		// 		date: date,
-		// 		note: note,
-		// 		taskIds: []
-		// 	};
-		// },
+			state.goals[id] = {
+				id: id,
+				name: name,
+				date: date,
+				note: note,
+				taskIds: []
+			};
+		},
 		removeGoal: (state, action) => {
 			const {id, name, date, note} = action.payload;
 			

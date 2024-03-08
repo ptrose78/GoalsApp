@@ -1,5 +1,18 @@
-import React, { useDispatch } from "react-redux";
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
+
+export const postTask = createAsyncThunk(
+    'tasks/postTask', 
+    async(taskData) => {
+        try {
+            const response = await axios.post('/tasks/new', taskData);
+            console.log(response.data)
+            return response.data;
+        } catch(error) {
+            throw error;
+        }
+    }
+)
 
 export const tasksSlice = createSlice({
     name: "tasks",
@@ -25,8 +38,23 @@ export const tasksSlice = createSlice({
 				return acc;
 				}, {});
         }
-    } 
-})
+    },
+    extraReducers: (builder) => {
+        builder
+        .addCase(postTask.pending, (state) => {
+            state.status = "loading";
+        })
+        .addCase(postTask.fulfilled, (state) => {
+            console.log("fulfilled tasks");
+            state.status = "succeeded";
+        })
+        .addCase(postTask.rejected, (state, action) => {
+            state.status = "rejected";
+            state.error = action.payload;
+        })
+        }
+    }
+)
 
 export const {addTask, removeTask} = tasksSlice.actions;
 export const selectTasks = (state) => state.tasks.tasks;
