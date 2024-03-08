@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import {Link} from "react-router-dom";
 import {selectGoals} from "./goalsSlice"
 import {selectTodos} from "../todos/todosSlice"
-import {removeGoal, fetchGoals} from "./goalsSlice";
+import {removeGoal, fetchGoals, deleteGoal} from "./goalsSlice";
 import {removeGoalFromTodos, removeAllTodos} from "../todos/todosSlice"
 import { Outlet, NavLink } from "react-router-dom";
 import NewGoalForm from "../../components/NewGoalForm";
@@ -18,17 +18,24 @@ export default function Goals() {
     
     useEffect(() => {
       dispatch(fetchGoals());
-  }, [dispatch]); 
+    }, [dispatch]); 
 
 
     const goals = useSelector(selectGoals);
     const todos = useSelector(selectTodos);
-    console.log(goals)
 
     function handleRemoveGoal(id) {
-        dispatch(removeGoalFromTodos({id}));
-        dispatch(removeGoal({id}));        
-    }
+      
+      dispatch(deleteGoal(id)).unwrap()
+          .then(() => {
+              dispatch(removeGoalFromTodos({ id }));
+              dispatch(removeGoal({ id }));
+              //dispatch(fetchGoals())
+          })
+          .catch(error => {
+              console.error("Failed to delete goal:", error);
+          });
+  }
 
     return (
       Object.keys(goals).length !== 0 ? (

@@ -19,6 +19,7 @@ app.use(bodyParser.json());
 
 app.post('/goals/new', (req, res) => {
     const { id, name, date, note } = req.body; 
+    console.log(req.body)
   
     const sql = "INSERT INTO goalgetter.goals (id, name, date, note) VALUES (?, ?, ?, ?)";
     db.query(sql, [id, name, date, note], (err, result) => {
@@ -31,7 +32,7 @@ app.post('/goals/new', (req, res) => {
 });
 
 app.get('/goals', async (req, res) => {
-    console.log('bye')
+    console.log('get')
     try {
       const sql = "SELECT * FROM goalgetter.goals"; 
       db.query(sql, (err, result) => {
@@ -39,12 +40,34 @@ app.get('/goals', async (req, res) => {
           console.error("Error fetching goals:", err);
           return res.status(500).json({ error: "Error fetching goals" });
         }
-        console.log(result)
         return res.status(200).json(result); 
       });
     } catch (error) {
       console.error("Error:", error);
       return res.status(500).json({ error: "Error fetching goals" });
+    }
+  });
+
+app.delete('/goals', async (req, res) => {
+  console.log(req.query)
+    const { id } = req.query; 
+    console.log('delete')
+    console.log(req.body)
+    console.log(id)
+    try {
+      const sql = "DELETE FROM goalgetter.goals WHERE ID = ?"; 
+      db.query(sql, [id], (err, result) => {
+        if (err) {
+          console.error("Error deleting goals:", err);
+          return res.status(500).json({ error: "Error deleting goals" });
+        }
+        console.log(id)
+        //console.log(result)
+        return res.status(200).json(result); 
+      });
+    } catch (error) {
+      console.error("Error:", error);
+      return res.status(500).json({ error: "Server error" });
     }
   });
 
