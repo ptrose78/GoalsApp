@@ -6,7 +6,6 @@ export const postGoal = createAsyncThunk(
 	async (postData) => {
 	  try {
 		const response = await axios.post('/goals/new', postData);
-		console.log(response.data)
 		return response.data;
 	  } catch (error) {
 		throw error;
@@ -16,8 +15,30 @@ export const postGoal = createAsyncThunk(
 
 export const fetchGoals = createAsyncThunk('goals/fetchGoals', async () => {
 	try {
-	  const response = await axios.get('/goals'); 
+	  const response = await axios.get('/goals');
 	  console.log(response.data)
+	  const reformattedGoals = response.data.reduce((acc, goal) => {
+		const { id, name, date, note } = goal;
+		
+		acc[id] = {
+		  id: id,
+		  name: name,
+		  date: date,
+		  note: note,
+		  taskIds: []
+		};
+		return acc;
+	  }, {});
+	  return reformattedGoals;
+	} catch (error) {
+	  throw error;
+	}
+  });
+
+export const deleteGoal = createAsyncThunk('goals/deleteGoal', async (id) => {
+	try {
+	  console.log(id)
+	  const response = await axios.delete('/goals', { params: {id} }); 
 	  return response.data;
 	} catch (error) {
 	  throw error;
@@ -88,10 +109,21 @@ export const goalsSlice = createSlice({
 				state.status = 'loading';
 			  })
 			  .addCase(fetchGoals.fulfilled, (state, action) => {
+				console.log(action.payload)
 				state.status = 'succeeded';
 				state.goals = action.payload;
 			  })
 			  .addCase(fetchGoals.rejected, (state, action) => {
+				state.status = 'failed';
+				state.error = action.payload;
+			  })
+			  .addCase(deleteGoal.pending, (state) => {
+				state.status = 'loading';
+			  })
+			  .addCase(deleteGoal.fulfilled, (state, action) => {
+				state.status = 'succeeded';
+			  })
+			  .addCase(deleteGoal.rejected, (state, action) => {
 				state.status = 'failed';
 				state.error = action.payload;
 			  })
