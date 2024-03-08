@@ -15,6 +15,7 @@ export default function AppLayout() {
     const dispatch = useDispatch();
 
     const goals = useSelector(selectGoals);
+
     const todos = useSelector(selectTodos);
     const tasks = useSelector(selectTasks);
     const location = useLocation();

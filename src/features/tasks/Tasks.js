@@ -24,13 +24,8 @@ export default function Tasks() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const {goalId} = useParams();
-    console.log(goalId)
-    console.log(goals)
     const goal = goals[goalId];
-    console.log(goals[goalId])
-    console.log(goal)
-   
-
+ 
     function handleRemoveTask(id){
         dispatch(removeTask({id}));
         dispatch(removeTaskFromGoals({id}));
