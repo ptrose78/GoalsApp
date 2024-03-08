@@ -1,9 +1,10 @@
 import React, {useState} from "react";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import ROUTES from "../app/routes"
 import { v4 as uuidv4 } from "uuid";
 import {addGoal, postGoal} from "../features/goals/goalsSlice";
+import {selectGoals} from "../features/goals/goalsSlice"
 
 export default function NewGoalForm({title}) {
     const [name, setName] = useState("");
@@ -11,6 +12,8 @@ export default function NewGoalForm({title}) {
     const [note, setNote] = useState("");
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    
+    const goals = useSelector(selectGoals);
 
     function handleSubmit(e, name, date, note) {
       
@@ -19,7 +22,7 @@ export default function NewGoalForm({title}) {
             return;
         }
 
-    const id = uuidv4();
+        const id = uuidv4();
         navigate(ROUTES.goalsRoute());
 
         const goalData = {
@@ -29,10 +32,18 @@ export default function NewGoalForm({title}) {
           note: note,
           };
 
-    dispatch(postGoal(goalData));
+        dispatch(postGoal(goalData));
     }
 
     return (
+        <>
+        <div style={{ textAlign: 'center' }}>
+          {Object.keys(goals).length === 0 ? (
+            <h2>Oops, You have not created a goal yet!</h2>
+          ) : (
+            null
+          )} 
+        </div>
         <section className="goalGetter-form">
         <h2>{title || "Create a Goal"}</h2>
         <form onSubmit={(e)=>{handleSubmit(e, name, date, note)}}>
@@ -60,6 +71,7 @@ export default function NewGoalForm({title}) {
           <button className="goalGetter-button" type="submit">Create Goal</button>
         </form>
       </section>
+      </>
       
     )
 }

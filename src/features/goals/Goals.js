@@ -7,9 +7,7 @@ import {Link} from "react-router-dom";
 import {selectGoals} from "./goalsSlice"
 import {selectTodos} from "../todos/todosSlice"
 import {removeGoal, fetchGoals, deleteGoal} from "./goalsSlice";
-import {removeGoalFromTodos, removeAllTodos} from "../todos/todosSlice"
-import { Outlet, NavLink } from "react-router-dom";
-import NewGoalForm from "../../components/NewGoalForm";
+import {removeGoalFromTodos} from "../todos/todosSlice"
 
 export default function Goals() {
 
@@ -30,12 +28,11 @@ export default function Goals() {
           .then(() => {
               dispatch(removeGoalFromTodos({ id }));
               dispatch(removeGoal({ id }));
-              //dispatch(fetchGoals())
           })
           .catch(error => {
               console.error("Failed to delete goal:", error);
           });
-  }
+    }
 
     return (
       Object.keys(goals).length !== 0 ? (
@@ -74,15 +71,8 @@ export default function Goals() {
     </div> 
     </section>
     ) : (
-    <>
-      <div style={{ textAlign: 'center' }}>
-      <h2>Oops, You have not created a goal yet!</h2>
-      </div>
-      <div style={{ textAlign: 'center' }}>
-      <NewGoalForm title={"Create a Goal"}/>
-      </div>
-    </>
+      navigate("/goals/new")
     )
-    )
+  )
 }
     
