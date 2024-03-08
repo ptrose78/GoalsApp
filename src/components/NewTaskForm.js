@@ -20,7 +20,7 @@ export default function NewTaskForm() {
     const[resources, setResources] = useState();
     const[notes, setNotes] = useState(); 
 
-    function handleSubmit(e) {
+    function handleSubmit(e, name, resources, notes) {
         e.preventDefault();
 
         const id = uuidv4();
@@ -33,7 +33,7 @@ export default function NewTaskForm() {
     return (
         <section className="goalGetter-form">
         <h2>Create a New Task for "{goal.name}"</h2>
-        <form onSubmit={handleSubmit} className="center-container">
+        <form onSubmit={(e)=>handleSubmit(e, name, resources, notes)} className="center-container">
           <input
             className="goalGetter-input"
             placeholder="Task Name"

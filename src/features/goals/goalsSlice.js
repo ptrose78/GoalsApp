@@ -55,17 +55,17 @@ export const goalsSlice = createSlice({
 	name: "goals",
 	initialState: initialState,
 	reducers: {
-		addGoal: (state, action) => {
-			const {id, name, date, note} = action.payload;
+		// addGoal: (state, action) => {
+		// 	const {id, name, date, note} = action.payload;
 			
-			state.goals[id] = {
-				id: id,
-				name: name,
-				date: date,
-				note: note,
-				taskIds: []
-			};
-		},
+		// 	state.goals[id] = {
+		// 		id: id,
+		// 		name: name,
+		// 		date: date,
+		// 		note: note,
+		// 		taskIds: []
+		// 	};
+		// },
 		removeGoal: (state, action) => {
 			const {id, name, date, note} = action.payload;
 			
