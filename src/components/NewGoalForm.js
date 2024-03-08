@@ -12,7 +12,7 @@ export default function NewGoalForm({title}) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    function handleSubmit(e) {
+    function handleSubmit(e, name, date, note) {
       
         e.preventDefault();
         if ((name.length === 0) || (date.length === 0)) {
@@ -20,9 +20,7 @@ export default function NewGoalForm({title}) {
         }
 
     const id = uuidv4();
-        dispatch(addGoal({id, name, date, note}));
         navigate(ROUTES.goalsRoute());
-        console.log("goals Route")
 
         const goalData = {
           id, id,
@@ -37,7 +35,7 @@ export default function NewGoalForm({title}) {
     return (
         <section className="goalGetter-form">
         <h2>{title || "Create a Goal"}</h2>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={(e)=>{handleSubmit(e, name, date, note)}}>
           <input
             id="goal-name"
             className="goalGetter-input"
