@@ -8,8 +8,6 @@ import {removeTask} from "./tasksSlice";
 import {removeTaskFromGoals} from "../goals/goalsSlice";
 import {addTodo} from "../todos/todosSlice";
 import {removeTodo} from "../todos/todosSlice";
-import {linkTaskToTodo, removeTaskFromTodo} from "../todos/todosSlice";
-import {linkTodoToGoal} from "../goals/goalsSlice";
 import ROUTES from "../../app/routes";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";

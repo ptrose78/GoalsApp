@@ -19,18 +19,30 @@ app.use(bodyParser.json());
 
 app.post('/goals/new', (req, res) => {
     const { id, name, date, note } = req.body; 
-  
+    console.log(req.body)
     const sql = "INSERT INTO goalgetter.goals (id, name, date, note) VALUES (?, ?, ?, ?)";
     db.query(sql, [id, name, date, note], (err, result) => {
         if (err) {
             return res.json(err);
         }
-        return res.json({ message: "Data inserted successfully" });
+        return res.json({message: "Data inserted successfully"});
     });
 });
 
+app.post('/tasks/new', (req, res) => {
+  const { id, name, resources, notes} = req.body;
+  console.log(req.body)
+  const sql = "INSERT INTO goalgetter.tasks (id, name, resources, notes) VALUES (?, ?, ?, ?)";
+  db.query(sql, [id, name, resources, notes], (err, result) => {
+    if (err) {
+        return res.json(err);
+    }
+    console.log("post tasks")
+    return res.json({message: "Data inserted successfully"});
+  });
+})
+
 app.get('/goals', async (req, res) => {
-    console.log('get')
     try {
       const sql = "SELECT * FROM goalgetter.goals"; 
       db.query(sql, (err, result) => {
