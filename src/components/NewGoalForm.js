@@ -1,10 +1,11 @@
 import React, {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
-import ROUTES from "../app/routes"
+import ROUTES from "../app/routes";
 import { v4 as uuidv4 } from "uuid";
 import {addGoal, postGoal} from "../features/goals/goalsSlice";
-import {selectGoals} from "../features/goals/goalsSlice"
+import {selectGoals} from "../features/goals/goalsSlice";
+import {useLocation} from 'react-router-dom';
 
 export default function NewGoalForm({title}) {
     const [name, setName] = useState("");
@@ -12,6 +13,7 @@ export default function NewGoalForm({title}) {
     const [note, setNote] = useState("");
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const location = useLocation();
     
     const goals = useSelector(selectGoals);
 
@@ -38,7 +40,7 @@ export default function NewGoalForm({title}) {
     return (
         <>
         <div style={{ textAlign: 'center' }}>
-          {Object.keys(goals).length === 0 ? (
+          {Object.keys(goals).length === 0 && location.pathname !== ROUTES.homeRoute() ? (
             <h2>Oops, You have not created a goal yet!</h2>
           ) : (
             null

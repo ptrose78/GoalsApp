@@ -7,8 +7,8 @@ import {addTask} from "../features/tasks/tasksSlice";
 import {linkTaskToGoal} from "../features/goals/goalsSlice";
 import {selectGoals} from "../features/goals/goalsSlice";
 import { useParams } from "react-router-dom";
-import {postGoal} from "../features/goals/goalsSlice";
-import {postTask} from "../features/tasks/tasksSlice";
+import {updateGoal} from "../features/goals/goalsSlice";
+import {postTask, postTaskIdtoGoalId} from "../features/tasks/tasksSlice";
 import {v4 as uuidv4} from "uuid";
 
 export default function NewTaskForm() {
@@ -28,10 +28,9 @@ export default function NewTaskForm() {
         const id = uuidv4();
 
         dispatch(addTask({id, name, resources, notes}));
-        dispatch(linkTaskToGoal({goalId, id}));
-        navigate(ROUTES.tasksRoute(goalId));
 
-        const goalData = {
+        const idData = {
+          id: goalId,
           taskId: id
         };
 
@@ -42,8 +41,12 @@ export default function NewTaskForm() {
           notes: notes
         }
 
-        //dispatch(postGoal(goalData));
+        dispatch(updateGoal(idData));
         dispatch(postTask(taskData))
+        dispatch(postTaskIdtoGoalId(idData));
+        
+        navigate(ROUTES.tasksRoute(goalId));
+  
     }
     
     return (

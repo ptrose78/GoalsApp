@@ -15,34 +15,21 @@ const db = mysql.createConnection({
   database : process.env.DATABASE
 });
 
-app.use(bodyParser.json());
+  app.use(bodyParser.json());
 
-app.post('/goals/new', (req, res) => {
-    const { id, name, date, note } = req.body; 
-    console.log(req.body)
-    const sql = "INSERT INTO goalgetter.goals (id, name, date, note) VALUES (?, ?, ?, ?)";
-    db.query(sql, [id, name, date, note], (err, result) => {
+  app.post('/goals/new', (req, res) => {
+    const { id, name, date, note, taskId } = req.body; 
+  
+    const sql = "INSERT INTO goalgetter.goals (id, name, date, note, taskId) VALUES (?, ?, ?, ?, ?)";
+    db.query(sql, [id, name, date, note, taskId], (err, result) => {
         if (err) {
             return res.json(err);
         }
         return res.json({message: "Data inserted successfully"});
     });
-});
-
-app.post('/tasks/new', (req, res) => {
-  const { id, name, resources, notes} = req.body;
-  console.log(req.body)
-  const sql = "INSERT INTO goalgetter.tasks (id, name, resources, notes) VALUES (?, ?, ?, ?)";
-  db.query(sql, [id, name, resources, notes], (err, result) => {
-    if (err) {
-        return res.json(err);
-    }
-    console.log("post tasks")
-    return res.json({message: "Data inserted successfully"});
   });
-})
 
-app.get('/goals', async (req, res) => {
+  app.get('/goals/fetch', async (req, res) => {
     try {
       const sql = "SELECT * FROM goalgetter.goals"; 
       db.query(sql, (err, result) => {
@@ -50,6 +37,7 @@ app.get('/goals', async (req, res) => {
           console.error("Error fetching goals:", err);
           return res.status(500).json({ error: "Error fetching goals" });
         }
+        console.log(result)
         return res.status(200).json(result); 
       });
     } catch (error) {
@@ -57,12 +45,9 @@ app.get('/goals', async (req, res) => {
     }
   });
 
-app.delete('/goals', async (req, res) => {
-  console.log(req.query)
+  app.delete('/goals/delete', async (req, res) => {
     const { id } = req.query; 
-    console.log('delete')
-    console.log(req.body)
-    console.log(id)
+ 
     try {
       const sql = "DELETE FROM goalgetter.goals WHERE ID = ?"; 
       db.query(sql, [id], (err, result) => {
@@ -70,8 +55,6 @@ app.delete('/goals', async (req, res) => {
           console.error("Error deleting goals:", err);
           return res.status(500).json({ error: "Error deleting goals" });
         }
-        console.log(id)
-        //console.log(result)
         return res.status(200).json(result); 
       });
     } catch (error) {
@@ -79,6 +62,46 @@ app.delete('/goals', async (req, res) => {
       return res.status(500).json({ error: "Server error" });
     }
   });
+  
+  app.put('/goals/update', async (req, res) => {
+    const { id, taskId } = req.body;
+  
+    const sql = "UPDATE goalgetter.goals SET taskId = CONCAT(IFNULL(taskId, ''), ?, ', ') WHERE id = ?";
+
+    db.query(sql, [taskId, id], (err, result) => {
+      if (err) {
+        console.error("Error updating goal:", err);
+        return res.status(500).json({ error: "Error updating goal" });
+      }
+      console.log("Goal updated successfully");
+      return res.status(200).json({ message: "Goal updated successfully", taskId: taskId });
+    });
+  });
+
+  app.post('/tasks/new', (req, res) => {
+    const { id, name, resources, notes} = req.body;
+    
+    const sql = "INSERT INTO goalgetter.tasks (id, name, resources, notes) VALUES (?, ?, ?, ?)";
+    db.query(sql, [id, name, resources, notes], (err, result) => {
+      if (err) {
+          return res.json(err);
+      }
+      console.log("post tasks")
+      return res.json({message: "Data inserted successfully"});
+    });
+  })
+
+  app.post('/tasks/ids', (req, res) => {
+    const {id, taskId} = req.body;
+
+    const sql = "INSERT INTO goalgetter.goal_tasks (id, taskId) VALUES (?, ?);"
+    db.query(sql, [id, taskId], (err, result) => {
+      if (err) {
+        return res.json(err);
+      }
+      return res.json({message: "Data inserted successfully"});
+    })
+  })
 
 app.listen(4000, () => {
     console.log("listening")

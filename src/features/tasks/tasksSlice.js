@@ -14,6 +14,19 @@ export const postTask = createAsyncThunk(
     }
 )
 
+export const postTaskIdtoGoalId = createAsyncThunk(
+    'tasks/postTaskIdToGoalId',
+    async(idData) => {
+        try {
+            const response = await axios.post('/tasks/Ids', idData);
+            console.log('ids');
+            return response.data;
+        } catch (error) {
+            throw (error);
+        }
+    }
+)
+
 export const tasksSlice = createSlice({
     name: "tasks",
     initialState: {
@@ -49,6 +62,16 @@ export const tasksSlice = createSlice({
             state.status = "succeeded";
         })
         .addCase(postTask.rejected, (state, action) => {
+            state.status = "rejected";
+            state.error = action.payload;
+        })
+        .addCase(postTaskIdtoGoalId.pending, (state) => {
+            state.status = "loading";
+        })
+        .addCase(postTaskIdtoGoalId.fulfilled, (state) => {
+            state.status = "succeeded";
+        })
+        .addCase(postTaskIdtoGoalId.rejected, (state, action) => {
             state.status = "rejected";
             state.error = action.payload;
         })

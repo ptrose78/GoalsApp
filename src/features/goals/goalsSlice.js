@@ -3,22 +3,36 @@ import axios from 'axios';
 
 export const postGoal = createAsyncThunk(
 	'posts/postGoal',
-	async (postData) => {
-	  try {
-		const response = await axios.post('/goals/new', postData);
-		console.log(response.data)
-		return response.data;
-	  } catch (error) {
-		throw error;
-	  }
+	async(postData) => {
+		try {
+			const response = await axios.post('/goals/new', postData);
+			return response.data;
+	  	} catch(error) {
+			throw error;
+	  	}
 	}
-  );
+);
 
-export const fetchGoals = createAsyncThunk('goals/fetchGoals', async () => {
+export const updateGoal = createAsyncThunk(
+	'goals/updateGoal',
+	async(updateData) => {
+		try {
+			const response = await axios.put('/goals/update', updateData);
+			console.log(response)
+			return response.data;
+		}
+		catch(error) {
+			throw error;
+		}
+	}
+)
+
+export const fetchGoals = createAsyncThunk('goals/fetchGoals', async() => {
 	try {
-	  const response = await axios.get('/goals');
-	  const reformattedGoals = response.data.reduce((acc, goal) => {
-		const { id, name, date, note } = goal;
+	  	const response = await axios.get('/goals/fetch');
+		console.log(response)
+	  	const reformattedGoals = response.data.reduce((acc, goal) => {
+		const { id, name, date, note, taskIds } = goal;
 		
 		acc[id] = {
 		  id: id,
@@ -37,8 +51,7 @@ export const fetchGoals = createAsyncThunk('goals/fetchGoals', async () => {
 
 export const deleteGoal = createAsyncThunk('goals/deleteGoal', async (id) => {
 	try {
-	  console.log(id)
-	  const response = await axios.delete('/goals', { params: {id} }); 
+	  const response = await axios.delete('/goals/delete', { params: {id} }); 
 	  return response.data;
 	} catch (error) {
 	  throw error;
@@ -83,7 +96,6 @@ export const goalsSlice = createSlice({
         },
 		linkTodoToGoal: (state, action) => {
             const {goalId, id} = action.payload;
-			console.log(goalId)
 
 			state.goals[goalId].todoIds.push(id);
         },
@@ -105,12 +117,22 @@ export const goalsSlice = createSlice({
 				state.status = 'failed';
 				state.error = action.payload;
 			  })
+			  .addCase(updateGoal.pending, (state, action) => {
+				state.status = 'loading';
+			  })
+			  .addCase(updateGoal.fulfilled, (state, action) => {
+				state.status = 'succeeded';
+			  })
+			  .addCase(updateGoal.rejected, (state, action) => {
+				state.status = 'rejected';
+				state.error = action.payload;
+			  })
 			  .addCase(fetchGoals.pending, (state) => {
 				state.status = 'loading';
 			  })
 			  .addCase(fetchGoals.fulfilled, (state, action) => {
-				console.log(action.payload)
 				state.status = 'succeeded';
+				console.log(action.payload)
 				state.goals = action.payload;
 			  })
 			  .addCase(fetchGoals.rejected, (state, action) => {
