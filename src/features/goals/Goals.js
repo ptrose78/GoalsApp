@@ -16,10 +16,11 @@ export default function Goals() {
     
     useEffect(() => {
       dispatch(fetchGoals());
-    }, [dispatch]); 
+    }, []); 
 
 
     const goals = useSelector(selectGoals);
+    console.log(goals)
     const todos = useSelector(selectTodos);
 
     function handleRemoveGoal(id) {
@@ -55,7 +56,7 @@ export default function Goals() {
               <td>{goal.date}</td>
               <td>{goal.note}</td>
               <td>
-                <Link to={ROUTES.tasksRoute(goal.id)}><button className="task-button">Add Task</button></Link>
+                <Link to={ROUTES.newTaskRoute(goal.id)}><button className="task-button">Create Task</button></Link>
                 <button onClick={() => handleRemoveGoal(goal.id)} className="remove-button">X</button>
               </td>
             </tr>

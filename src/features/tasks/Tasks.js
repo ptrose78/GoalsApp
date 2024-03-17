@@ -18,11 +18,12 @@ export default function Tasks() {
     const goals = useSelector(selectGoals);
     const tasks = useSelector(selectTasks);
     const todos = useSelector(selectTodos);
-
+    
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const {goalId} = useParams();
     const goal = goals[goalId];
+    console.log(goal)
  
     function handleRemoveTask(id){
         dispatch(removeTask({id}));
