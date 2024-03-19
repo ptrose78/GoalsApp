@@ -30,7 +30,6 @@ export const postTaskIdtoGoalId = createAsyncThunk(
 export const fetchTasks = createAsyncThunk(
     'tasks/fetchTasks',
     async(goalId) => {
-        console.log(goalId)
         try {
             const response = await axios.get('/tasks/fetch', { params: {goalId} });
             
@@ -48,8 +47,20 @@ export const fetchTasks = createAsyncThunk(
               }, {});
               return reformattedTasks;
         } catch(error) {
-            console.log(error)
             throw error;
+        }
+    }
+)
+
+export const deleteTask = createAsyncThunk(
+    'tasks/deleteTask', 
+    async(id) => {
+        try {
+            const response = await axios.delete('/tasks/delete', { params: {id}});
+            return response.data;
+        }
+        catch(error) {
+            throw(error);
         }
     }
 )
@@ -113,6 +124,16 @@ export const tasksSlice = createSlice({
             state.tasks = action.payload;
         })
         .addCase(fetchTasks.rejected, (state, action) => {
+            state.status = "rejected";
+            state.error = action.payload;
+        })
+        .addCase(deleteTask.pending, (state) => {
+            state.status = "loading";
+        })
+        .addCase(deleteTask.fulfilled, (state) => {
+            state.status = "succeeded";
+        })
+        .addCase(deleteTask.rejected, (state, action) => {
             state.status = "rejected";
             state.error = action.payload;
         })
