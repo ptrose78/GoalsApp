@@ -32,10 +32,10 @@ export const fetchGoals = createAsyncThunk('goals/fetchGoals', async() => {
 	  	const response = await axios.get('/goals/fetch');
 		console.log(response)
 	  	const reformattedGoals = response.data.reduce((acc, goal) => {
-		const { id, name, date, note, taskIds } = goal;
+		const { goalId, name, date, note, taskIds } = goal;
 		
-		acc[id] = {
-		  id: id,
+		acc[goalId] = {
+		  goalId: goalId,
 		  name: name,
 		  date: date,
 		  note: note,
@@ -49,9 +49,9 @@ export const fetchGoals = createAsyncThunk('goals/fetchGoals', async() => {
 	}
   });
 
-export const deleteGoal = createAsyncThunk('goals/deleteGoal', async (id) => {
+export const deleteGoal = createAsyncThunk('goals/deleteGoal', async (goalId) => {
 	try {
-	  const response = await axios.delete('/goals/delete', { params: {id} }); 
+	  const response = await axios.delete('/goals/delete', { params: {goalId} }); 
 	  return response.data;
 	} catch (error) {
 	  throw error;
@@ -69,10 +69,10 @@ export const goalsSlice = createSlice({
 	initialState: initialState,
 	reducers: {
 		addGoal: (state, action) => {
-			const {id, name, date, note} = action.payload;
+			const {goalId, name, date, note} = action.payload;
 			
-			state.goals[id] = {
-				id: id,
+			state.goals[goalId] = {
+				goalId: goalId,
 				name: name,
 				date: date,
 				note: note,
@@ -80,11 +80,11 @@ export const goalsSlice = createSlice({
 			};
 		},
 		removeGoal: (state, action) => {
-			const {id, name, date, note} = action.payload;
+			const {goalId, name, date, note} = action.payload;
 			
 			state.goals = Object.values(state.goals).reduce((acc, goal)=>{
-				if (goal.id !== id) {
-					acc[goal.id] = goal
+				if (goal.goalId !== goalId) {
+					acc[goal.goalId] = goal
 				}
 				return acc;
 				}, {});

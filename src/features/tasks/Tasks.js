@@ -1,8 +1,9 @@
 import React from "react-redux";
 import { useDispatch, useSelector } from "react-redux";
+import {useEffect} from "react";
 import { useParams } from "react-router-dom";
 import {selectGoals} from "../goals/goalsSlice";
-import {selectTasks} from "./tasksSlice";
+import {resetTasks, selectTasks, fetchTasks} from "./tasksSlice";
 import {selectTodos} from "../todos/todosSlice";
 import {removeTask} from "./tasksSlice";
 import {removeTaskFromGoals} from "../goals/goalsSlice";
@@ -16,14 +17,22 @@ import '../../app/App.css';
 
 export default function Tasks() {
     const goals = useSelector(selectGoals);
-    const tasks = useSelector(selectTasks);
     const todos = useSelector(selectTodos);
     
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
     const {goalId} = useParams();
     const goal = goals[goalId];
-    console.log(goal)
+
+
+    useEffect(() => {
+        console.log(goalId)
+        dispatch(resetTasks());
+        dispatch(fetchTasks(goalId));
+      }, []); 
+
+    const tasks = useSelector(selectTasks);
  
     function handleRemoveTask(id){
         dispatch(removeTask({id}));
@@ -51,11 +60,10 @@ export default function Tasks() {
                 </tr>
                 </thead>
                 <tbody>
-            {goal.taskIds.map((taskId) => {
-                const task = tasks[taskId];
+            {Object.values(tasks).map((task) => {
                 if (task) {
                 return (
-                    <tr key={taskId}>
+                    <tr key={task.id}>
                     <td>{task.name}</td>
                     <td>{task.resources}</td>
                     <td>{task.notes}</td>

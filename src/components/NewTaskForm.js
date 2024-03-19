@@ -30,7 +30,7 @@ export default function NewTaskForm() {
         dispatch(addTask({id, name, resources, notes}));
 
         const idData = {
-          id: goalId,
+          goalId: goalId,
           taskId: id
         };
 
@@ -41,12 +41,11 @@ export default function NewTaskForm() {
           notes: notes
         }
 
-        dispatch(updateGoal(idData));
+        //dispatch(updateGoal(idData));
         dispatch(postTask(taskData))
         dispatch(postTaskIdtoGoalId(idData));
         
         navigate(ROUTES.tasksRoute(goalId));
-  
     }
     
     return (

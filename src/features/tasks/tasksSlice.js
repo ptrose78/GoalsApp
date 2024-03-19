@@ -27,12 +27,42 @@ export const postTaskIdtoGoalId = createAsyncThunk(
     }
 )
 
+export const fetchTasks = createAsyncThunk(
+    'tasks/fetchTasks',
+    async(goalId) => {
+        console.log(goalId)
+        try {
+            const response = await axios.get('/tasks/fetch', { params: {goalId} });
+            
+            const reformattedTasks = response.data.reduce((acc, task) => {
+                const {id, name, resources, notes } = task;
+                console.log(task)
+                
+                acc[id] = {
+                  id: id,
+                  name: name,
+                  resources: resources,
+                  notes: notes
+                };
+                return acc;
+              }, {});
+              return reformattedTasks;
+        } catch(error) {
+            console.log(error)
+            throw error;
+        }
+    }
+)
+
 export const tasksSlice = createSlice({
     name: "tasks",
     initialState: {
         tasks: {}
     },
     reducers: {
+        resetTasks: (state) => {
+            state.tasks = {};
+        },
         addTask: (state, action) => {
             const {id, name, resources, notes} = action.payload;
             state.tasks[id] = {
@@ -75,10 +105,21 @@ export const tasksSlice = createSlice({
             state.status = "rejected";
             state.error = action.payload;
         })
+        .addCase(fetchTasks.pending, (state) => {
+            state.status = "loading";
+        })
+        .addCase(fetchTasks.fulfilled, (state, action) => {
+            state.status = "succeeded";
+            state.tasks = action.payload;
+        })
+        .addCase(fetchTasks.rejected, (state, action) => {
+            state.status = "rejected";
+            state.error = action.payload;
+        })
         }
     }
 )
 
-export const {addTask, removeTask} = tasksSlice.actions;
+export const {resetTasks, addTask, removeTask} = tasksSlice.actions;
 export const selectTasks = (state) => state.tasks.tasks;
 export default tasksSlice.reducer;

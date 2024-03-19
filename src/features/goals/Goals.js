@@ -18,17 +18,15 @@ export default function Goals() {
       dispatch(fetchGoals());
     }, []); 
 
-
     const goals = useSelector(selectGoals);
-    console.log(goals)
     const todos = useSelector(selectTodos);
 
-    function handleRemoveGoal(id) {
+    function handleRemoveGoal(goalId) {
       
-      dispatch(deleteGoal(id)).unwrap()
+      dispatch(deleteGoal(goalId)).unwrap()
           .then(() => {
-              dispatch(removeGoalFromTodos({ id }));
-              dispatch(removeGoal({ id }));
+              dispatch(removeGoalFromTodos({ goalId }));
+              dispatch(removeGoal({ goalId }));
           })
           .catch(error => {
               console.error("Failed to delete goal:", error);
@@ -51,13 +49,13 @@ export default function Goals() {
         </thead>
         <tbody>
           {Object.values(goals).map((goal) => (
-            <tr key={goal.id}>
+            <tr key={goal.goalId}>
               <td>{goal.name}</td>
               <td>{goal.date}</td>
               <td>{goal.note}</td>
               <td>
-                <Link to={ROUTES.newTaskRoute(goal.id)}><button className="task-button">Create Task</button></Link>
-                <button onClick={() => handleRemoveGoal(goal.id)} className="remove-button">X</button>
+                <Link to={ROUTES.newTaskRoute(goal.goalId)}><button className="task-button">Create Task</button></Link>
+                <button onClick={() => handleRemoveGoal(goal.goalId)} className="remove-button">X</button>
               </td>
             </tr>
           ))}
