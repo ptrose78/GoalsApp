@@ -24,11 +24,11 @@ export default function NewGoalForm({title}) {
             return;
         }
 
-        const id = uuidv4();
+        const goalId = uuidv4();
         navigate(ROUTES.goalsRoute());
 
         const goalData = {
-          id, id,
+          goalId, goalId,
           name: name,
           date: date,
           note: note,

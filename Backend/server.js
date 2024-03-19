@@ -18,10 +18,11 @@ const db = mysql.createConnection({
   app.use(bodyParser.json());
 
   app.post('/goals/new', (req, res) => {
-    const { id, name, date, note, taskId } = req.body; 
+    const { goalId, name, date, note, taskId } = req.body; 
+    console.log(goalId)
   
-    const sql = "INSERT INTO goalgetter.goals (id, name, date, note, taskId) VALUES (?, ?, ?, ?, ?)";
-    db.query(sql, [id, name, date, note, taskId], (err, result) => {
+    const sql = "INSERT INTO goalgetter.goals (goalId, name, date, note, taskId) VALUES (?, ?, ?, ?, ?)";
+    db.query(sql, [goalId, name, date, note, taskId], (err, result) => {
         if (err) {
             return res.json(err);
         }
@@ -37,7 +38,7 @@ const db = mysql.createConnection({
           console.error("Error fetching goals:", err);
           return res.status(500).json({ error: "Error fetching goals" });
         }
-        console.log(result)
+        //console.log(result)
         return res.status(200).json(result); 
       });
     } catch (error) {
@@ -46,11 +47,12 @@ const db = mysql.createConnection({
   });
 
   app.delete('/goals/delete', async (req, res) => {
-    const { id } = req.query; 
+    const { goalId } = req.query;
+    console.log(goalId) 
  
     try {
-      const sql = "DELETE FROM goalgetter.goals WHERE ID = ?"; 
-      db.query(sql, [id], (err, result) => {
+      const sql = "DELETE FROM goalgetter.goals WHERE goalId = ?"; 
+      db.query(sql, [goalId], (err, result) => {
         if (err) {
           console.error("Error deleting goals:", err);
           return res.status(500).json({ error: "Error deleting goals" });
@@ -64,11 +66,11 @@ const db = mysql.createConnection({
   });
   
   app.put('/goals/update', async (req, res) => {
-    const { id, taskId } = req.body;
+    const { goalId, taskId } = req.body;
   
-    const sql = "UPDATE goalgetter.goals SET taskId = CONCAT(IFNULL(taskId, ''), ?, ', ') WHERE id = ?";
+    const sql = "UPDATE goalgetter.goals SET taskId = CONCAT(IFNULL(taskId, ''), ?, ', ') WHERE goalId = ?";
 
-    db.query(sql, [taskId, id], (err, result) => {
+    db.query(sql, [taskId, goalId], (err, result) => {
       if (err) {
         console.error("Error updating goal:", err);
         return res.status(500).json({ error: "Error updating goal" });
@@ -92,14 +94,31 @@ const db = mysql.createConnection({
   })
 
   app.post('/tasks/ids', (req, res) => {
-    const {id, taskId} = req.body;
+    const {goalId, taskId} = req.body;
 
-    const sql = "INSERT INTO goalgetter.goal_tasks (id, taskId) VALUES (?, ?);"
-    db.query(sql, [id, taskId], (err, result) => {
+    const sql = "INSERT INTO goalgetter.goal_tasks (goalId, taskId) VALUES (?, ?);"
+    db.query(sql, [goalId, taskId], (err, result) => {
       if (err) {
         return res.json(err);
       }
       return res.json({message: "Data inserted successfully"});
+    })
+  })
+
+  app.get('/tasks/fetch', (req, res) => {
+    console.log(req.query)
+    const { goalId } = req.query;
+    console.log(goalId)
+    
+    const sql = "SELECT tasks.* FROM tasks JOIN goal_tasks ON tasks.id = goal_tasks.taskId WHERE goal_tasks.goalId = ?";
+    db.query(sql, [goalId], (err, result) => {
+      if (err) {
+        console.log("error fetching tasks")
+        return res.status(500).json({ error: "Error fetching tasks" });
+      }
+      console.log('fetchTasks') 
+      console.log(result)
+      return res.status(200).json(result);
     })
   })
 
