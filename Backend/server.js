@@ -122,6 +122,19 @@ const db = mysql.createConnection({
     })
   })
 
+  app.delete('/tasks/delete', (req, res) => {
+    const {id} = req.query;
+    console.log(id)
+
+    const sql = "DELETE FROM goalgetter.tasks WHERE id = ?";
+    db.query(sql, [id], (err, result) => {
+      if (err) {
+        return res.status(500).json({error: "Error deleting task"})
+      }
+      return res.status(200).json(result);
+    })
+  })
+
 app.listen(4000, () => {
     console.log("listening")
 })

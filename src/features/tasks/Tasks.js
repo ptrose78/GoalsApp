@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import {selectGoals} from "../goals/goalsSlice";
 import {resetTasks, selectTasks, fetchTasks} from "./tasksSlice";
 import {selectTodos} from "../todos/todosSlice";
-import {removeTask} from "./tasksSlice";
+import {removeTask, deleteTask} from "./tasksSlice";
 import {removeTaskFromGoals} from "../goals/goalsSlice";
 import {addTodo} from "../todos/todosSlice";
 import {removeTodo} from "../todos/todosSlice";
@@ -37,7 +37,8 @@ export default function Tasks() {
     function handleRemoveTask(id){
         dispatch(removeTask({id}));
         dispatch(removeTaskFromGoals({id}));
-        dispatch(removeTodo({id}))
+        dispatch(removeTodo({id}));
+        dispatch(deleteTask(id));
     }
 
     function handleAddTodo(id) {
