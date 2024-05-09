@@ -69,8 +69,8 @@ export default function Tasks() {
                     <td>{task.resources}</td>
                     <td>{task.notes}</td>
                     <td>
-                        <button onClick={() => { handleAddTodo(task.id) }} className="task-button">Add To-do</button>
-                        <button onClick={() => { handleRemoveTask(task.id) }} className="remove-button">x</button>
+                        <button onClick={() => {handleAddTodo(task.id)}} className="task-button">Add To-do</button>
+                        <button onClick={() => {handleRemoveTask(task.id)}} className="remove-button">x</button>
                        
                     </td>
                     </tr>

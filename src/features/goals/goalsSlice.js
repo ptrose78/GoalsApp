@@ -49,7 +49,7 @@ export const fetchGoals = createAsyncThunk('goals/fetchGoals', async() => {
 	}
   });
 
-export const deleteGoal = createAsyncThunk('goals/deleteGoal', async (goalId) => {
+export const deleteGoal = createAsyncThunk('goals/delete', async (goalId) => {
 	try {
 	  const response = await axios.delete('/goals/delete', { params: {goalId} }); 
 	  return response.data;
@@ -57,6 +57,19 @@ export const deleteGoal = createAsyncThunk('goals/deleteGoal', async (goalId) =>
 	  throw error;
 	}
   });
+
+  export const deleteGoalIdAndTaskId = createAsyncThunk(
+    'tasks/delete',
+    async (goalId) => {
+        try {
+            const response = await axios.delete('tasks/delete', { params: {goalId} });
+			console.log("deleteGoal and Task Ids")
+            return response.data;
+        } catch (error) {
+            throw (error);
+        }
+    }
+)
 
 const initialState = {
 	goals: {},
@@ -107,48 +120,59 @@ export const goalsSlice = createSlice({
 		}},
 	extraReducers: (builder) => {
 			builder
-			  .addCase(postGoal.pending, (state) => {
-				state.status = 'loading';
-			  })
-			  .addCase(postGoal.fulfilled, (state, action) => {
-				state.status = 'succeeded';
-			  })
-			  .addCase(postGoal.rejected, (state, action) => {
-				state.status = 'failed';
-				state.error = action.payload;
-			  })
-			  .addCase(updateGoal.pending, (state, action) => {
-				state.status = 'loading';
-			  })
-			  .addCase(updateGoal.fulfilled, (state, action) => {
-				state.status = 'succeeded';
-			  })
-			  .addCase(updateGoal.rejected, (state, action) => {
-				state.status = 'rejected';
-				state.error = action.payload;
-			  })
-			  .addCase(fetchGoals.pending, (state) => {
-				state.status = 'loading';
-			  })
-			  .addCase(fetchGoals.fulfilled, (state, action) => {
-				state.status = 'succeeded';
-				console.log(action.payload)
-				state.goals = action.payload;
-			  })
-			  .addCase(fetchGoals.rejected, (state, action) => {
-				state.status = 'failed';
-				state.error = action.payload;
-			  })
-			  .addCase(deleteGoal.pending, (state) => {
-				state.status = 'loading';
-			  })
-			  .addCase(deleteGoal.fulfilled, (state, action) => {
-				state.status = 'succeeded';
-			  })
-			  .addCase(deleteGoal.rejected, (state, action) => {
-				state.status = 'failed';
-				state.error = action.payload;
-			  })
+				.addCase(postGoal.pending, (state) => {
+					state.status = 'loading';
+				})
+				.addCase(postGoal.fulfilled, (state, action) => {
+					state.status = 'succeeded';
+				})
+				.addCase(postGoal.rejected, (state, action) => {
+					state.status = 'failed';
+					state.error = action.payload;
+				})
+				.addCase(updateGoal.pending, (state, action) => {
+					state.status = 'loading';
+				})
+				.addCase(updateGoal.fulfilled, (state, action) => {
+					state.status = 'succeeded';
+				})
+				.addCase(updateGoal.rejected, (state, action) => {
+					state.status = 'rejected';
+					state.error = action.payload;
+				})
+				.addCase(fetchGoals.pending, (state) => {
+					state.status = 'loading';
+				})
+				.addCase(fetchGoals.fulfilled, (state, action) => {
+					state.status = 'succeeded';
+					console.log(action.payload)
+					state.goals = action.payload;
+				})
+				.addCase(fetchGoals.rejected, (state, action) => {
+					state.status = 'failed';
+					state.error = action.payload;
+				})
+				.addCase(deleteGoal.pending, (state) => {
+					state.status = 'loading';
+				})
+				.addCase(deleteGoal.fulfilled, (state, action) => {
+					state.status = 'succeeded';
+				})
+				.addCase(deleteGoal.rejected, (state, action) => {
+					state.status = 'failed';
+					state.error = action.payload;
+				})
+				.addCase(deleteGoalIdAndTaskId.pending, (state) => {
+					state.status = "loading";
+				})
+				.addCase(deleteGoalIdAndTaskId.fulfilled, (state, action) => {
+					state.status = "succeeded";
+					state.error = action.payload;
+				})
+				.addCase(deleteGoalIdAndTaskId.rejected, (state, action) => {
+					state.status = "rejected";
+					state.error = action.payload;
+				})
 		  }
 	}
 )

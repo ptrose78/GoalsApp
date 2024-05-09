@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import {Link} from "react-router-dom";
 import {selectGoals} from "./goalsSlice"
 import {selectTodos} from "../todos/todosSlice"
-import {removeGoal, fetchGoals, deleteGoal} from "./goalsSlice";
+import {removeGoal, fetchGoals, deleteGoal, deleteGoalIdAndTaskId} from "./goalsSlice";
 import {removeGoalFromTodos} from "../todos/todosSlice"
 
 export default function Goals() {
@@ -25,8 +25,9 @@ export default function Goals() {
       
       dispatch(deleteGoal(goalId)).unwrap()
           .then(() => {
-              dispatch(removeGoalFromTodos({ goalId }));
-              dispatch(removeGoal({ goalId }));
+              dispatch(removeGoalFromTodos({goalId}));
+              dispatch(removeGoal({goalId}));
+              //dispatch(deleteGoalIdAndTaskId(goalId));
           })
           .catch(error => {
               console.error("Failed to delete goal:", error);
