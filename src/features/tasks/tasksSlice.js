@@ -53,10 +53,10 @@ export const fetchTasks = createAsyncThunk(
 )
 
 export const deleteTask = createAsyncThunk(
-    'tasks/deleteTask', 
+    'task/deleteTask', 
     async(id) => {
         try {
-            const response = await axios.delete('/tasks/delete', { params: {id}});
+            const response = await axios.delete('/task/delete', { params: {id}});
             return response.data;
         }
         catch(error) {

@@ -49,21 +49,31 @@ const db = mysql.createConnection({
   app.delete('/goals/delete', async (req, res) => {
     const { goalId } = req.query;
     console.log(goalId) 
+    console.log('added code')
  
     try {
-      const sql = "DELETE FROM goalgetter.goals WHERE goalId = ?"; 
-      db.query(sql, [goalId], (err, result) => {
-        if (err) {
-          console.error("Error deleting goals:", err);
-          return res.status(500).json({ error: "Error deleting goals" });
-        }
-        return res.status(200).json(result); 
+      const sqlCommands = [
+          "DELETE goalgetter.tasks FROM goalgetter.tasks JOIN goalgetter.goal_tasks ON goalgetter.tasks.id = goalgetter.goal_tasks.taskId WHERE goalgetter.goal_tasks.goalId = ?",
+          "DELETE FROM goalgetter.goals WHERE goalId = ?",
+          "DELETE FROM goalgetter.goal_tasks WHERE goalId = ?"
+      ]
+      
+      sqlCommands.forEach(sql => {
+          db.query(sql, [goalId], (err, result) => {
+              if (err) {
+                  console.error("Error executing:", err);
+                  return res.status(500).json({ error: "Error executing" });
+              }
+              console.log(result);
+          });
       });
-    } catch (error) {
+  
+      return res.status(200).json({ message: "Commands executed successfully" });
+  } catch (error) {
       console.error("Error:", error);
-      return res.status(500).json({ error: "Server error" });
-    }
-  });
+      return res.status(500).json({ error: "Internal server error" });
+  }
+});
   
   app.put('/goals/update', async (req, res) => {
     const { goalId, taskId } = req.body;
@@ -105,10 +115,29 @@ const db = mysql.createConnection({
     })
   })
 
+  // app.delete('/tasks/delete', (req, res) => {
+  //   console.log('sdfsdf')
+  //   const {goalId} = req.query;
+  //   console.log(goalId)
+
+  //   try {
+  //     const sql = "DELETE FROM goalgetter.goal_tasks WHERE goalId = ?";
+  //     db.query(sql, [goalId], (err, result) => {
+  //       if (err) {
+  //         console.error("Error deleting goals:", err);
+  //         return res.status(500).json({ error: "Error deleting goals" });
+  //       }
+  //       console.log(result)
+  //       return res.status(200).json(result); 
+  //     });
+  //   } catch (error) {
+  //     console.error("Error:", error);
+  //     return res.status(500).json({ error: "Server error" });
+  //   }
+  // })
+
   app.get('/tasks/fetch', (req, res) => {
-    console.log(req.query)
     const { goalId } = req.query;
-    console.log(goalId)
     
     const sql = "SELECT tasks.* FROM tasks JOIN goal_tasks ON tasks.id = goal_tasks.taskId WHERE goal_tasks.goalId = ?";
     db.query(sql, [goalId], (err, result) => {
@@ -122,7 +151,7 @@ const db = mysql.createConnection({
     })
   })
 
-  app.delete('/tasks/delete', (req, res) => {
+  app.delete('/task/delete', (req, res) => {
     const {id} = req.query;
     console.log(id)
 
