@@ -1,19 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { UseDispatch, useDispatch, useSelector } from "react-redux";
-import {selectTodos} from "./todosSlice";
+import {fetchTodos, selectTodos} from "./todosSlice";
 import {removeTodo} from "./todosSlice";
 import {selectTasks} from "../tasks/tasksSlice";
 import {selectGoals} from "../goals/goalsSlice";
 import ROUTES from "../../app/routes";
 import {Link} from "react-router-dom";
 
-
+  
 export default function Todos () {
     const todos = useSelector(selectTodos);
     const tasks = useSelector(selectTasks);
     const goals = useSelector(selectGoals);
 
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(fetchTodos());
+    }, []);
 
     function handleRemoveTodo(id) {
         dispatch(removeTodo({id}));
@@ -36,25 +40,21 @@ export default function Todos () {
                 </tr>
                 </thead>
                 <tbody>
-                {Object.values(todos).map((todo) =>
-                    Object.values(tasks).map((task) => {
-                        if (todo.id === task.id) {
+                {Object.values(todos).map((todo) => {
+                    if (todo) {
                         return (
-                          
                             <tr key={todo.id}>
-                            <td>{task.name}</td>
-                            <td>{task.resources}</td>
-                            <td>{task.notes}</td>
-                            {/* <td>{goals[todo.goalId].name}</td> */}
+                            <td>{todo.name}</td>
+                            <td>{todo.resources}</td>
+                            <td>{todo.notes}</td>
+                            <td>{todo.goal}</td>
                             <td>
                                 <button onClick={() => { handleRemoveTodo(todo.id) }} className="remove-button">x</button>
                             </td>
                             </tr>
-                        );
-                        }
-                        return null;
-                    })
-                    )}
+                        )}
+                    return null;
+                })}
                 </tbody>
                 </table>
             )}

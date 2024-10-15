@@ -7,7 +7,7 @@ import {resetTasks, selectTasks, fetchTasks} from "./tasksSlice";
 import {selectTodos} from "../todos/todosSlice";
 import {removeTask, deleteTask} from "./tasksSlice";
 import {removeTaskFromGoals} from "../goals/goalsSlice";
-import {addTodo} from "../todos/todosSlice";
+import {postTodo} from "../todos/todosSlice";
 import {removeTodo} from "../todos/todosSlice";
 import ROUTES from "../../app/routes";
 import { useNavigate } from "react-router-dom";
@@ -42,8 +42,18 @@ export default function Tasks() {
         dispatch(deleteTask(id));
     }
 
-    function handleAddTodo(id) {
-        dispatch(addTodo({id, goalId}));
+    function handleAddTodo(task) {
+        const id = uuidv4();
+        
+        const todoData = {
+            id: id,
+            name: task.name,
+            resources: task.resources,
+            notes: task.notes,
+            goal: goal.name
+          }
+
+        dispatch(postTodo(todoData));
 
         navigate(ROUTES.todoRoute());
     }
@@ -70,7 +80,7 @@ export default function Tasks() {
                     <td>{task.resources}</td>
                     <td>{task.notes}</td>
                     <td>
-                        <button onClick={() => {handleAddTodo(task.id)}} className="task-button">Add To-do</button>
+                        <button onClick={() => {handleAddTodo(task)}} className="task-button">Add To-do</button>
                         <button onClick={() => {handleRemoveTask(task.id)}} className="remove-button">x</button>
                        
                     </td>
