@@ -19,13 +19,15 @@ const db = mysql.createConnection({
 
   app.post('/goals/new', (req, res) => {
     const { goalId, name, date, note, taskId } = req.body; 
-    console.log(goalId)
+    console.log(req.body)
   
     const sql = "INSERT INTO goalgetter.goals (goalId, name, date, note, taskId) VALUES (?, ?, ?, ?, ?)";
     db.query(sql, [goalId, name, date, note, taskId], (err, result) => {
         if (err) {
             return res.json(err);
         }
+        console.log(err)
+        console.log(result)
         return res.json({message: "Data inserted successfully"});
     });
   });
@@ -38,7 +40,6 @@ const db = mysql.createConnection({
           console.error("Error fetching goals:", err);
           return res.status(500).json({ error: "Error fetching goals" });
         }
-        //console.log(result)
         return res.status(200).json(result); 
       });
     } catch (error) {
@@ -104,39 +105,6 @@ const db = mysql.createConnection({
     });
   })
 
-  app.post('/tasks/ids', (req, res) => {
-    const {goalId, taskId} = req.body;
-
-    const sql = "INSERT INTO goalgetter.goal_tasks (goalId, taskId) VALUES (?, ?);"
-    db.query(sql, [goalId, taskId], (err, result) => {
-      if (err) {
-        return res.json(err);
-      }
-      return res.json({message: "Data inserted successfully"});
-    })
-  })
-
-  // app.delete('/tasks/delete', (req, res) => {
-  //   console.log('sdfsdf')
-  //   const {goalId} = req.query;
-  //   console.log(goalId)
-
-  //   try {
-  //     const sql = "DELETE FROM goalgetter.goal_tasks WHERE goalId = ?";
-  //     db.query(sql, [goalId], (err, result) => {
-  //       if (err) {
-  //         console.error("Error deleting goals:", err);
-  //         return res.status(500).json({ error: "Error deleting goals" });
-  //       }
-  //       console.log(result)
-  //       return res.status(200).json(result); 
-  //     });
-  //   } catch (error) {
-  //     console.error("Error:", error);
-  //     return res.status(500).json({ error: "Server error" });
-  //   }
-  // })
-
   app.get('/tasks/fetch', (req, res) => {
     const { goalId } = req.query;
     console.log(goalId)
@@ -163,6 +131,55 @@ const db = mysql.createConnection({
         return res.status(500).json({error: "Error deleting task"})
       }
       return res.status(200).json(result);
+    })
+  })
+
+  app.post('/todos/new', (req, res) => {
+    console.log(req.body)
+    const {id, name, resources, notes, goal} = req.body;
+    const sql = "INSERT INTO goalgetter.todos (id, name, resources, notes, goal) VALUES (?, ?, ?, ?, ?)";
+
+    db.query(sql, [id, name, resources, notes, goal], (err, result) => {
+      if (err) {
+        console.log(err)
+        console.log("failed todos")
+        return res.json(err);
+      }
+      console.log("success")
+      return res.json({message: "data inserted successfully"})
+    })
+  })
+
+  app.get('/todos/fetch', (req, res) => {
+    console.log("fetchTodos")
+    console.log(req.body)
+
+    const sql = "SELECT * FROM goalgetter.todos"
+
+    db.query(sql, (err, result) => {
+      try {
+        if (err) {
+          console.log(err)
+          return res.status(500).json({ error: "Error fetching goals" });
+          }
+          console.log("success todos fetch")
+        return res.status(200).json(result);
+      }
+      catch (error) {
+        return res.status(500).json({ error: "Error fetching goals" });
+      }
+    })
+  });
+
+  app.post('/tasks/ids', (req, res) => {
+    const {goalId, taskId} = req.body;
+
+    const sql = "INSERT INTO goalgetter.goal_tasks (goalId, taskId) VALUES (?, ?);"
+    db.query(sql, [goalId, taskId], (err, result) => {
+      if (err) {
+        return res.json(err);
+      }
+      return res.json({message: "Data inserted successfully"});
     })
   })
 
