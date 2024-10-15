@@ -18,6 +18,7 @@ import '../../app/App.css';
 export default function Tasks() {
     const goals = useSelector(selectGoals);
     const todos = useSelector(selectTodos);
+    const tasks = useSelector(selectTasks);
     
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -32,7 +33,7 @@ export default function Tasks() {
         dispatch(fetchTasks(goalId));
       }, []); 
 
-    const tasks = useSelector(selectTasks);
+    console.log(tasks)
  
     function handleRemoveTask(id){
         dispatch(removeTask({id}));

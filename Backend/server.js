@@ -92,6 +92,7 @@ const db = mysql.createConnection({
 
   app.post('/tasks/new', (req, res) => {
     const { id, name, resources, notes} = req.body;
+    console.log(name)
     
     const sql = "INSERT INTO goalgetter.tasks (id, name, resources, notes) VALUES (?, ?, ?, ?)";
     db.query(sql, [id, name, resources, notes], (err, result) => {
@@ -138,6 +139,7 @@ const db = mysql.createConnection({
 
   app.get('/tasks/fetch', (req, res) => {
     const { goalId } = req.query;
+    console.log(goalId)
     
     const sql = "SELECT tasks.* FROM tasks JOIN goal_tasks ON tasks.id = goal_tasks.taskId WHERE goal_tasks.goalId = ?";
     db.query(sql, [goalId], (err, result) => {

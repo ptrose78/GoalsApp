@@ -1,25 +1,28 @@
 import React from "react";
 import {useDispatch, useSelector} from "react-redux";
+import { useParams } from "react-router-dom";
 import {useEffect} from "react";
 import ROUTES from "../../app/routes";
 import { useNavigate } from "react-router-dom";
 import {Link} from "react-router-dom";
 import {selectGoals} from "./goalsSlice"
+import {selectTasks, fetchTasks} from "../tasks/tasksSlice"
 import {selectTodos} from "../todos/todosSlice"
-import {removeGoal, fetchGoals, deleteGoal, deleteGoalIdAndTaskId} from "./goalsSlice";
+import {removeGoal, fetchGoals, deleteGoal} from "./goalsSlice";
 import {removeGoalFromTodos} from "../todos/todosSlice"
 
 export default function Goals() {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const goals = useSelector(selectGoals);
+    const tasks = useSelector(selectTasks);
+    const todos = useSelector(selectTodos);
     
     useEffect(() => {
       dispatch(fetchGoals());
     }, []); 
-
-    const goals = useSelector(selectGoals);
-    const todos = useSelector(selectTodos);
 
     function handleRemoveGoal(goalId) {
       
@@ -27,7 +30,6 @@ export default function Goals() {
           .then(() => {
               dispatch(removeGoalFromTodos({goalId}));
               dispatch(removeGoal({goalId}));
-              //dispatch(deleteGoalIdAndTaskId(goalId));
           })
           .catch(error => {
               console.error("Failed to delete goal:", error);
@@ -55,8 +57,12 @@ export default function Goals() {
               <td>{goal.date}</td>
               <td>{goal.note}</td>
               <td>
-                <Link to={ROUTES.newTaskRoute(goal.goalId)}><button className="task-button">Create Task</button></Link>
-                <button onClick={() => handleRemoveGoal(goal.goalId)} className="remove-button">X</button>
+              {goal.taskId.length !== 0 ? (
+                <Link to={ROUTES.tasksRoute(goal.goalId)}><button className="task-button">See Tasks</button></Link>
+              ) : (
+              <Link to={ROUTES.newTaskRoute(goal.goalId)}><button className="task-button">Create Task</button></Link>
+              )}
+              <button onClick={() => handleRemoveGoal(goal.goalId)} className="remove-button">X</button>
               </td>
             </tr>
           ))}
