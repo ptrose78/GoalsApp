@@ -32,14 +32,14 @@ export const fetchGoals = createAsyncThunk('goals/fetchGoals', async() => {
 	  	const response = await axios.get('/goals/fetch');
 		console.log(response)
 	  	const reformattedGoals = response.data.reduce((acc, goal) => {
-		const { goalId, name, date, note, taskIds } = goal;
+		const { goalId, name, date, note, taskId } = goal;
 		
 		acc[goalId] = {
 		  goalId: goalId,
 		  name: name,
 		  date: date,
 		  note: note,
-		  taskIds: []
+		  taskId: taskId
 		};
 		return acc;
 	  }, {});
@@ -104,8 +104,8 @@ export const goalsSlice = createSlice({
 		},
         linkTaskToGoal: (state, action) => {
             const {goalId, id} = action.payload;
-
-			state.goals[goalId].taskIds.push(id);
+			console.log("linkTaskToGoal")
+			state.goals[goalId].taskId.push(id);
         },
 		linkTodoToGoal: (state, action) => {
             const {goalId, id} = action.payload;

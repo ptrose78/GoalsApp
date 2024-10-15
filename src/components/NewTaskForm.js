@@ -41,9 +41,10 @@ export default function NewTaskForm() {
           notes: notes
         }
 
-        //dispatch(updateGoal(idData));
-        dispatch(postTask(taskData))
+        dispatch(updateGoal(idData));
+        dispatch(postTask(taskData));
         dispatch(postTaskIdtoGoalId(idData));
+        //dispatch(linkTaskToGoal(idData));
         
         navigate(ROUTES.tasksRoute(goalId));
     }

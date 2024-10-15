@@ -45,7 +45,7 @@ export default function Todos () {
                             <td>{task.name}</td>
                             <td>{task.resources}</td>
                             <td>{task.notes}</td>
-                            <td>{goals[todo.goalId].name}</td>
+                            {/* <td>{goals[todo.goalId].name}</td> */}
                             <td>
                                 <button onClick={() => { handleRemoveTodo(todo.id) }} className="remove-button">x</button>
                             </td>

@@ -11,6 +11,7 @@ export default function NewGoalForm({title}) {
     const [name, setName] = useState("");
     const [date, setDate] = useState("");
     const [note, setNote] = useState("");
+    const [taskId, setTaskId] = useState("");
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
@@ -28,10 +29,11 @@ export default function NewGoalForm({title}) {
         navigate(ROUTES.goalsRoute());
 
         const goalData = {
-          goalId, goalId,
+          goalId: goalId,
           name: name,
           date: date,
           note: note,
+          taskId: taskId
           };
 
         dispatch(postGoal(goalData));
