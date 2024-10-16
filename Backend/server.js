@@ -76,7 +76,7 @@ const db = mysql.createConnection({
   }
 });
   
-  app.put('/goals/update', async (req, res) => {
+app.put('/goals/addTaskId', async (req, res) => {
     const { goalId, taskId } = req.body;
   
     const sql = "UPDATE goalgetter.goals SET taskId = CONCAT(IFNULL(taskId, ''), ?, ', ') WHERE goalId = ?";
@@ -86,10 +86,28 @@ const db = mysql.createConnection({
         console.error("Error updating goal:", err);
         return res.status(500).json({ error: "Error updating goal" });
       }
-      console.log("Goal updated successfully");
+      console.log("Goal addTaskId successfully");
       return res.status(200).json({ message: "Goal updated successfully", taskId: taskId });
     });
   });
+  
+  app.put('/goals/removeTaskId', async (req, res) => {
+    console.log(req.body)
+    const { goalId, taskId } = req.body;
+  
+    const sql = "UPDATE goalgetter.goals SET taskId = TRIM(BOTH ', ' FROM REPLACE(taskId, ?, '')) WHERE goalId = ?";
+
+    db.query(sql, [taskId, goalId], (err, result) => {
+      if (err) {
+        console.error("Error updating goal:", err);
+        return res.status(500).json({ error: "Error updating goal" });
+      }
+      console.log("Goal removeTaskId successfully");
+      return res.status(200).json({ message: "Goal updated successfully", taskId: taskId });
+    });
+  });
+
+  
 
   app.post('/tasks/new', (req, res) => {
     const { id, name, resources, notes} = req.body;
@@ -128,8 +146,10 @@ const db = mysql.createConnection({
     const sql = "DELETE FROM goalgetter.tasks WHERE id = ?";
     db.query(sql, [id], (err, result) => {
       if (err) {
+        console.log("task delete fail")
         return res.status(500).json({error: "Error deleting task"})
       }
+      console.log("task delete success")
       return res.status(200).json(result);
     })
   })

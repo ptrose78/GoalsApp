@@ -6,7 +6,7 @@ import {selectGoals} from "../goals/goalsSlice";
 import {resetTasks, selectTasks, fetchTasks} from "./tasksSlice";
 import {selectTodos} from "../todos/todosSlice";
 import {removeTask, deleteTask} from "./tasksSlice";
-import {removeTaskFromGoals} from "../goals/goalsSlice";
+import {removeTaskIdFromGoal, removeTaskFromGoals} from "../goals/goalsSlice";
 import {postTodo} from "../todos/todosSlice";
 import {removeTodo} from "../todos/todosSlice";
 import ROUTES from "../../app/routes";
@@ -36,10 +36,16 @@ export default function Tasks() {
     console.log(tasks)
  
     function handleRemoveTask(id){
+        const idData = {
+            goalId: goalId,
+            taskId: id
+          };
+
         dispatch(removeTask({id}));
-        dispatch(removeTaskFromGoals({id}));
-        dispatch(removeTodo({id}));
+        //dispatch(removeTaskFromGoals({id}));
+        //dispatch(removeTodo({id}));
         dispatch(deleteTask(id));
+        dispatch(removeTaskIdFromGoal(idData));
     }
 
     function handleAddTodo(task) {

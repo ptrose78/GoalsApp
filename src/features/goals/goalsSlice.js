@@ -13,11 +13,25 @@ export const postGoal = createAsyncThunk(
 	}
 );
 
-export const updateGoal = createAsyncThunk(
-	'goals/updateGoal',
+export const addTaskIdToGoal = createAsyncThunk(
+	'goals/addTaskIdToGoal',
 	async(updateData) => {
 		try {
-			const response = await axios.put('/goals/update', updateData);
+			const response = await axios.put('/goals/addTaskId', updateData);
+			console.log(response)
+			return response.data;
+		}
+		catch(error) {
+			throw error;
+		}
+	}
+)
+
+export const removeTaskIdFromGoal = createAsyncThunk(
+	'goals/removeTaskIdFromGoal',
+	async(updateData) => {
+		try {
+			const response = await axios.put('/goals/removeTaskId', updateData);
 			console.log(response)
 			return response.data;
 		}
@@ -130,13 +144,23 @@ export const goalsSlice = createSlice({
 					state.status = 'failed';
 					state.error = action.payload;
 				})
-				.addCase(updateGoal.pending, (state, action) => {
+				.addCase(addTaskIdToGoal.pending, (state, action) => {
 					state.status = 'loading';
 				})
-				.addCase(updateGoal.fulfilled, (state, action) => {
+				.addCase(addTaskIdToGoal.fulfilled, (state, action) => {
 					state.status = 'succeeded';
 				})
-				.addCase(updateGoal.rejected, (state, action) => {
+				.addCase(addTaskIdToGoal.rejected, (state, action) => {
+					state.status = 'rejected';
+					state.error = action.payload;
+				})
+				.addCase(removeTaskIdFromGoal.pending, (state, action) => {
+					state.status = 'loading';
+				})
+				.addCase(removeTaskIdFromGoal.fulfilled, (state, action) => {
+					state.status = 'succeeded';
+				})
+				.addCase(removeTaskIdFromGoal.rejected, (state, action) => {
 					state.status = 'rejected';
 					state.error = action.payload;
 				})
