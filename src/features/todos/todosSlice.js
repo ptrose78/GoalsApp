@@ -15,6 +15,19 @@ export const postTodo = createAsyncThunk(
     }
 )
 
+export const postTodoIdtoTaskId = createAsyncThunk(
+    'tasks/postTodoIdToGoalId',
+    async(idData) => {
+        try {
+            const response = await axios.post('/todos/Ids', idData);
+            console.log('ids');
+            return response.data;
+        } catch (error) {
+            throw (error);
+        }
+    }
+)
+
 export const fetchTodos = createAsyncThunk(
     'todos/fetchTodos',
     async() => {

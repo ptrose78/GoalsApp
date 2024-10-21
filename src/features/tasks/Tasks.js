@@ -4,7 +4,7 @@ import {useEffect} from "react";
 import { useParams } from "react-router-dom";
 import {selectGoals} from "../goals/goalsSlice";
 import {resetTasks, selectTasks, fetchTasks} from "./tasksSlice";
-import {selectTodos} from "../todos/todosSlice";
+import {postTodoIdtoTaskId, selectTodos} from "../todos/todosSlice";
 import {removeTask, deleteTask} from "./tasksSlice";
 import {removeTaskIdFromGoal, removeTaskFromGoals} from "../goals/goalsSlice";
 import {postTodo} from "../todos/todosSlice";
@@ -40,16 +40,22 @@ export default function Tasks() {
             goalId: goalId,
             taskId: id
           };
-
+          console.log(id)
         dispatch(removeTask({id}));
         //dispatch(removeTaskFromGoals({id}));
         //dispatch(removeTodo({id}));
         dispatch(deleteTask(id));
-        dispatch(removeTaskIdFromGoal(idData));
+        //dispatch(removeTaskIdFromGoal(idData));
     }
 
     function handleAddTodo(task) {
         const id = uuidv4();
+
+        const idData = {
+            goalId: goalId,
+            taskId: task.id,
+            todoId: id
+          };
         
         const todoData = {
             id: id,
@@ -60,6 +66,7 @@ export default function Tasks() {
           }
 
         dispatch(postTodo(todoData));
+        dispatch(postTodoIdtoTaskId(idData));
 
         navigate(ROUTES.todoRoute());
     }
