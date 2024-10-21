@@ -40,6 +40,19 @@ export const fetchTodos = createAsyncThunk(
     }
 )
 
+export const deleteTodo = createAsyncThunk(
+    'delete/deleteTodo',
+    async(id) => {
+        try {
+            const response = await axios.delete('todo/delete', {params: {id}});
+            return response.data;
+        } 
+        catch(error) {
+            throw(error);
+        }
+    }
+)
+
 const initialState = {
             todos: {}
         }
@@ -99,8 +112,17 @@ export const todosSlice = createSlice({
         .addCase(fetchTodos.rejected, (state, action) => {
             state.status = "rejected";
             state.error = action.payload;
-        }
-        )
+        })
+        .addCase(deleteTodo.pending, (state) => {
+            state.status = "pending";
+        })
+        .addCase(deleteTodo.fulfilled, (state) => {
+            state.status = "fulfilled";
+        })
+        .addCase(deleteTodo.rejected, (state, action) => {
+            state.status = "rejected";
+            state.error = action.payload;
+        })
     }
 })
 
