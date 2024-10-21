@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { UseDispatch, useDispatch, useSelector } from "react-redux";
 import {fetchTodos, selectTodos} from "./todosSlice";
-import {removeTodo} from "./todosSlice";
+import {deleteTodo, removeTodo} from "./todosSlice";
 import {selectTasks} from "../tasks/tasksSlice";
 import {selectGoals} from "../goals/goalsSlice";
 import ROUTES from "../../app/routes";
@@ -21,6 +21,7 @@ export default function Todos () {
 
     function handleRemoveTodo(id) {
         dispatch(removeTodo({id}));
+        dispatch(deleteTodo(id));
     }
 
     return (

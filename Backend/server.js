@@ -107,8 +107,6 @@ app.put('/goals/addTaskId', async (req, res) => {
     });
   });
 
-  
-
   app.post('/tasks/new', (req, res) => {
     const { id, name, resources, notes} = req.body;
     console.log(name)
@@ -190,6 +188,21 @@ app.put('/goals/addTaskId', async (req, res) => {
       }
     })
   });
+
+  app.delete('/todo/delete', (req, res) => {
+    const {id} = req.query;
+    console.log(id)
+    const sql = "DELETE FROM goalgetter.todos WHERE id = ?"
+
+    db.query(sql, [id], (err, result) => {
+        if (err) {
+          console.log(err)
+          return res.status(500).json({ error: "Error deleting todos"});
+        }
+        console.log(result)
+        return res.status(200).json(result)
+      })
+  })
 
   app.post('/tasks/ids', (req, res) => {
     const {goalId, taskId} = req.body;
