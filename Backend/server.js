@@ -54,9 +54,10 @@ const db = mysql.createConnection({
  
     try {
       const sqlCommands = [
-          "DELETE goalgetter.tasks FROM goalgetter.tasks JOIN goalgetter.goal_tasks ON goalgetter.tasks.id = goalgetter.goal_tasks.taskId WHERE goalgetter.goal_tasks.goalId = ?",
+          "DELETE goalgetter.tasks FROM goalgetter.tasks JOIN goalgetter.goal_tasks_todos ON goalgetter.tasks.id = goalgetter.goal_tasks_todos.taskId WHERE goalgetter.goal_tasks_todos.goalId = ?",
+          "DELETE goalgetter.todos FROM goalgetter.todos JOIN goalgetter.goal_tasks_todos ON goalgetter.todos.id = goalgetter.goal_tasks_todos.todoId WHERE goalgetter.goal_tasks_todos.goalId = ?",
           "DELETE FROM goalgetter.goals WHERE goalId = ?",
-          "DELETE FROM goalgetter.goal_tasks WHERE goalId = ?"
+          "DELETE FROM goalgetter.goal_tasks_todos WHERE goalId = ?"
       ]
       
       sqlCommands.forEach(sql => {
@@ -125,7 +126,7 @@ app.put('/goals/addTaskId', async (req, res) => {
     const { goalId } = req.query;
     console.log(goalId)
     
-    const sql = "SELECT tasks.* FROM tasks JOIN goal_tasks ON tasks.id = goal_tasks.taskId WHERE goal_tasks.goalId = ?";
+    const sql = "SELECT tasks.* FROM tasks JOIN goal_tasks_todos ON tasks.id = goal_tasks_todos.taskId WHERE goal_tasks_todos.goalId = ?";
     db.query(sql, [goalId], (err, result) => {
       if (err) {
         console.log("error fetching tasks")
@@ -141,15 +142,24 @@ app.put('/goals/addTaskId', async (req, res) => {
     const {id} = req.query;
     console.log(id)
 
-    const sql = "DELETE FROM goalgetter.tasks WHERE id = ?";
-    db.query(sql, [id], (err, result) => {
+    try {
+    const sqlCommands = ["DELETE FROM goalgetter.tasks WHERE id = ?",
+    "DELETE goalgetter.todos FROM goalgetter.todos JOIN goalgetter.goal_tasks_todos ON goalgetter.todos.id = goalgetter.goal_tasks_todos.todoId WHERE goalgetter.goal_tasks_todos.taskId = ?",
+    "DELETE FROM goalgetter.goal_tasks_todos WHERE taskId = ?"]
+
+    sqlCommands.forEach(sql => {
+      db.query(sql, [id], (err, result) => {
       if (err) {
         console.log("task delete fail")
         return res.status(500).json({error: "Error deleting task"})
-      }
-      console.log("task delete success")
-      return res.status(200).json(result);
-    })
+        }
+      });
+    });
+        return res.status(200).json({ message: "Commands executed successfully" });
+    } catch (error) {
+        console.log("task delete success")
+        return res.status(200).json(result);
+    }
   })
 
   app.post('/todos/new', (req, res) => {
@@ -178,13 +188,13 @@ app.put('/goals/addTaskId', async (req, res) => {
       try {
         if (err) {
           console.log(err)
-          return res.status(500).json({ error: "Error fetching goals" });
+          return res.status(500).json({ error: "Error fetching todos" });
           }
           console.log("success todos fetch")
         return res.status(200).json(result);
       }
       catch (error) {
-        return res.status(500).json({ error: "Error fetching goals" });
+        return res.status(500).json({ error: "Error fetching todos" });
       }
     })
   });
@@ -207,8 +217,20 @@ app.put('/goals/addTaskId', async (req, res) => {
   app.post('/tasks/ids', (req, res) => {
     const {goalId, taskId} = req.body;
 
-    const sql = "INSERT INTO goalgetter.goal_tasks (goalId, taskId) VALUES (?, ?);"
+    const sql = "INSERT INTO goalgetter.goal_tasks_todos (goalId, taskId) VALUES (?, ?);"
     db.query(sql, [goalId, taskId], (err, result) => {
+      if (err) {
+        return res.json(err);
+      }
+      return res.json({message: "Data inserted successfully"});
+    })
+  })
+
+  app.post('/todos/ids', (req, res) => {
+    const {goalId, taskId, todoId} = req.body;
+
+    const sql = "INSERT INTO goalgetter.goal_tasks_todos (goalId, taskId, todoId) VALUES (?, ?, ?);"
+    db.query(sql, [goalId, taskId, todoId], (err, result) => {
       if (err) {
         return res.json(err);
       }
