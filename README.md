@@ -89,3 +89,56 @@ Ensure you have the following installed:
 | POST        | `/todos/new`             | Creates a new to-do                     |
 | DELETE      | `/todo/delete`           | Deletes a to-do                         |
 
+## Example Code Snippets
+
+### Goal Management
+
+```javascript
+useEffect(() => {
+  dispatch(fetchGoals());
+}, []); 
+
+function handleRemoveGoal(goalId) {
+  dispatch(deleteGoal(goalId)).unwrap()
+    .then(() => {
+      dispatch(removeGoalFromTodos({goalId}));
+      dispatch(removeGoal({goalId}));
+    })
+    .catch(error => {
+      console.error("Failed to delete goal:", error);
+    });
+}
+```
+
+### Task Management
+
+```javascript
+function handleAddTodo(task) {
+  const id = uuidv4();
+  const todoData = {
+    id: id,
+    name: task.name,
+    resources: task.resources,
+    notes: task.notes,
+    goal: goal.name
+  };
+  dispatch(postTodo(todoData));
+  navigate(ROUTES.todoRoute());
+}
+```
+
+### Database Interaction (MySQL)
+
+```javascript
+app.post('/goals/new', (req, res) => {
+  const { goalId, name, date, note, taskId } = req.body; 
+  const sql = "INSERT INTO goalgetter.goals (goalId, name, date, note, taskId) VALUES (?, ?, ?, ?, ?)";
+  db.query(sql, [goalId, name, date, note, taskId], (err, result) => {
+    if (err) {
+      return res.json(err);
+    }
+    return res.json({message: "Data inserted successfully"});
+  });
+});
+```
+
