@@ -64,3 +64,28 @@ Ensure you have the following installed:
    ```
    The app will run on `http://localhost:3000`.
 
+## Application Architecture
+
+### State Management (Redux)
+- **goalsSlice.js:** Manages the state for goals including fetching, creating, and deleting goals.
+- **tasksSlice.js:** Handles task-related actions such as adding, removing, and associating tasks with goals.
+- **todosSlice.js:** Manages to-do items, including fetching, creating, and deleting to-do lists.
+
+### Components
+- **Goals:** Displays a list of goals with options to view associated tasks, create new goals, and delete goals.
+- **Tasks:** Shows tasks for a specific goal and allows users to add new tasks or remove existing ones.
+- **To-dos:** Lists all to-dos and their associated resources, notes, and goals.
+
+### API Endpoints
+| HTTP Method | Endpoint                | Description                             |
+|-------------|-------------------------|-----------------------------------------|
+| GET         | `/goals/fetch`           | Fetches all goals                       |
+| POST        | `/goals/new`             | Creates a new goal                      |
+| DELETE      | `/goals/delete`          | Deletes a specific goal                 |
+| GET         | `/tasks/fetch?goalId=ID` | Fetches tasks related to a specific goal|
+| POST        | `/tasks/new`             | Creates a new task                      |
+| DELETE      | `/task/delete`           | Deletes a task                          |
+| GET         | `/todos/fetch`           | Fetches all to-dos                      |
+| POST        | `/todos/new`             | Creates a new to-do                     |
+| DELETE      | `/todo/delete`           | Deletes a to-do                         |
+
