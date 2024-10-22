@@ -142,3 +142,17 @@ app.post('/goals/new', (req, res) => {
 });
 ```
 
+## Future Improvements
+
+- Implement user authentication to support multi-user functionality.
+- Add drag-and-drop functionality for task prioritization.
+- Implement analytics dashboards for goal-tracking progress.
+- Add notifications or reminders for tasks and to-do items.
+
+## License
+
+This project is licensed under the MIT License.
+
+---
+
+Feel free to customize and expand on this app to suit your specific needs. I welcome contributions!
